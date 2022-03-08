@@ -2,6 +2,36 @@ const express = require("express");
 
 const app = express();
 
+const mysql = require("mysql");
+//---Variables env---//
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+//---Sécurisation---//
+
+const helmet = require("helmet");
+app.use(helmet());
+
+app.disable("x-powered-by");
+
+// ------------ //
+
+// ---Connect to MySql--- //
+
+const db = mysql.createConnection({
+  host: "localhost",
+
+  user: "root",
+
+  password: "133qlop@",
+});
+
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connecté à la base de données MySQL!");
+});
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
