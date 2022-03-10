@@ -1,0 +1,35 @@
+<template>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Bienvenue</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"></li>
+
+        <li class="nav-item"></li>
+      </ul>
+    </div>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: "NavBar",
+};
+</script>
+
+<style lang="scss">
+nav {
+  background-color: #7888c1;
+}
+</style>
