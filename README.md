@@ -1,1 +1,51 @@
 # Projet_7_OC
+
+# About
+
+Groupomania un groupe spécialisé dans la grande distribution et l'un des plus fidèles clients de l'agence.
+Le projet consiste à construire un réseau social interne pour les employés de Groupomania. Le but de cet outil est de faciliter les interactions entre collègues.
+
+Groupomania laisse la liberté sur les fonctionnalités du réseau et a imaginé plusieurs briques pour favoriser les échanges entre collègues.
+
+# Feature
+
+Voici les exigences émises par le comité de pilotage :
+
+- La présentation des fonctionnalités doit être simple ;
+- La création d’un compte doit être simple et possible depuis un téléphone mobile ;
+- Le profil doit contenir très peu d’informations pour que sa complétion soit rapide ;
+- La suppression du compte doit être possible ;
+- L’accès à un forum où les salariés publient des contenus multimédias doit être présent ;
+- L’accès à un forum où les salariés publient des textes doit être présent ;
+- Les utilisateurs doivent pouvoir facilement repérer les dernières participations des employés ;
+- Le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre
+  salariés;
+
+# Lancement des services Frontend ⚙️
+
+- Frameworks Vue.js Version 3
+- Avec la commande `cd` se rendre dans le dossier Front-end puis `cd social-media`.
+- Pour lancer l'application `npm run serve`
+
+# Backend ⚙️
+
+Avec la commande cd se rendre dans le dossier backend et lancer le serveur: nodemon server.
+
+# Important information ⚙️
+
+Afin de tester l'application, veuillez créer un dossier images en suivant la même syntaxte.
+
+Le dossier est renvoyé sur le fichier .gitignore afin de ne pas envoyer les images sur github.
+
+# Exigences de sécurité 🔒
+
+Frontend 🔒
+
+- Vérifications des saisies de l'utilisateur (inscription) avec les regex javascript.
+- Aucune données sensibles stocké dans le localstorage.
+
+Backend 🔒
+
+- Authentification par Token.
+- Algorithme de hachage.
+- Helmet.
