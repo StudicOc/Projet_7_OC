@@ -2,36 +2,21 @@ const express = require("express");
 
 const app = express();
 
-const mysql = require("mysql");
-//---Variables env---//
+app.use(express.json());
+
+const userRoutes = require("./routes/user");
+
+const db = require("./models/User");
+const dbMessage = require("./models/Article");
+db.sequelize.sync();
 
 const dotenv = require("dotenv");
 dotenv.config();
 
-//---Sécurisation---//
+//---Path donne acces à notre chemin de system de fichiers.
+const path = require("path");
 
-const helmet = require("helmet");
-app.use(helmet());
-
-app.disable("x-powered-by");
-
-// ------------ //
-
-// ---Connect to MySql--- //
-
-const db = mysql.createConnection({
-  host: "localhost",
-
-  user: "root",
-
-  password: "133qlop@",
-});
-
-db.connect(function (err) {
-  if (err) throw err;
-  console.log("Connecté à la base de données MySQL!");
-});
-
+//--- CORS---//
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -42,7 +27,11 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
+
   next();
 });
+app.use("/images", express.static(path.join(__dirname, "images"))); //---Path donne acces à notre chemin de system de fichiers.
+app.use("/api/auth", userRoutes);
+app.use("/api/profil", userRoutes);
 
 module.exports = app;
