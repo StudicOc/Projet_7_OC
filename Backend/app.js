@@ -42,5 +42,4 @@ app.disable("x-powered-by");
 //---Protection des attaques XSS--//
 app.use(helmet.xssFilter());
 
-require("dotenv").config();
 module.exports = app;
