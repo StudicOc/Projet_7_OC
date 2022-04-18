@@ -1,13 +1,13 @@
 # Projet_7_OC
 
-# About
+# About 🔥
 
 Groupomania un groupe spécialisé dans la grande distribution et l'un des plus fidèles clients de l'agence.
 Le projet consiste à construire un réseau social interne pour les employés de Groupomania. Le but de cet outil est de faciliter les interactions entre collègues.
 
 Groupomania laisse la liberté sur les fonctionnalités du réseau et a imaginé plusieurs briques pour favoriser les échanges entre collègues.
 
-# Feature
+# Feature 🧾
 
 Voici les exigences émises par le comité de pilotage :
 
