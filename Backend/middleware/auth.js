@@ -1,5 +1,5 @@
-// Middleware d'authentification //
-//Protégera les routes sélectionnées, vérifiera que l'user est authentifié avant d'autoriser l'envoi de ses requêtes.
+// Middleware d'authentification JWT//
+///Couche de sécurité //
 
 const jwt = require("jsonwebtoken");
 
@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
     if (req.body.userId && req.body.userId !== userId) {
       throw "Invalid user ID";
     } else {
+      req.userId = userId;
       next();
     }
   } catch {
