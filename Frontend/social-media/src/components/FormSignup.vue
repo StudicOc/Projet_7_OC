@@ -1,6 +1,6 @@
 <template>
   <div class="Suscribe">
-    <h2 class="h4 fw-bold text-center mt-4">S’inscrire</h2>
+    <h2 class="h4 font-weight-bold text-center mt-4">S’inscrire</h2>
     <form
       class="d-flex flex-column justify-content-center align-items-center mt-5"
     >

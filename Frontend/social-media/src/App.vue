@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div class="loader-container">
-      <div class="loader"></div>
-    </div>
     <NavBar />
   </div>
 
@@ -11,7 +8,6 @@
 
 <script>
 import NavBar from "./components/NavBar.vue";
-
 export default {
   name: "App",
   components: {
@@ -29,10 +25,8 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 nav {
   padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -40,7 +34,6 @@ nav {
     text-transform: uppercase;
     padding: 10px;
     font-size: 14px;
-
     &.router-link-exact-active {
       color: white;
       background: rgb(72, 14, 86);
@@ -83,14 +76,12 @@ nav {
   -webkit-animation: spin 0.3s infinite;
   -o-animation: spin 0.3s infinite;
 }
-
 @keyframes hidden {
   100% {
     opacity: 0; /*transparence des éléments*/
     z-index: -1;
   }
 }
-
 @keyframes spin {
   100% {
     transform: rotate(360deg);

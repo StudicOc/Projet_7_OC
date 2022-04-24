@@ -13,20 +13,44 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <router-link to="/">Home</router-link>
+        <div class="navbar-nav" v-if="!isLogged">
+          <router-link to="/">Groupomania</router-link>
           <router-link to="/signup">Inscription</router-link>
           <router-link to="/login">Connexion</router-link>
-          <router-link to="/profil">Profil</router-link>
+        </div>
+        <div class="navbar-nav" v-if="isLogged">
+          <router-link to="/profil"> Profil </router-link>
+          <!--:to="`/profil/${profil.id}`"/${id}`-->
+          <router-link to="/addarticle">Poster un article</router-link>
+          <button value="Submit" @click="logout">deconnexion</button>
         </div>
       </div>
     </div>
   </nav>
+
   <router-view />
 </template>
 
 <script>
 export default {
   name: "NavBar",
+
+  data() {
+    return {
+      isLogged: false,
+    };
+  },
+  created() {
+    this.isLogged = localStorage.getItem("user") ?? false;
+  },
+
+  methods: {
+    //logout(): supprimer JWTdu stockage local
+    logout() {
+      this.isLogged = false;
+      localStorage.removeItem("user");
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
