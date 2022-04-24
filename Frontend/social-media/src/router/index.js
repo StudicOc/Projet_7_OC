@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/HomeView.vue";
-import SignupForm from "../views/SignupView.vue";
-import LoginForm from "../views/LoginView.vue";
-import ProfilConnect from "../views/DashboardView.vue";
+import about from "@/views/Public/AboutGroupomania.vue";
+import SignupForm from "@/views/Public/SignupView.vue";
+import LoginForm from "@/views/Public/LoginView.vue";
+import ProfilConnect from "@/views/User/DashboardView.vue";
+import addarticle from "@/views/User/ArticleView.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home,
+    name: "about",
+    component: about,
   },
+
   {
     path: "/signup",
     name: "signup",
@@ -24,6 +26,11 @@ const routes = [
     path: "/profil",
     name: "profil",
     component: ProfilConnect,
+  },
+  {
+    path: "/addarticle",
+    name: "PostArticle",
+    component: addarticle,
   },
 ];
 
