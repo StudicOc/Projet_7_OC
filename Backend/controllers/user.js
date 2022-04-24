@@ -42,13 +42,13 @@ exports.login = (req, res, next) => {
 
           res.status(200).json({
             message: "Connexion réussie",
-            user,
             token: jwt.sign(
               {
                 userId: user.userId,
                 firstname: user.firstname,
                 lastname: user.lastname,
                 email: user.email,
+                createdAt: user.createdAt,
               },
               "RANDOM_TOKEN_SECRET",
               {
@@ -62,17 +62,25 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-exports.profil = (req, res) => {
-  // Récuperer l'en-tête d'authorisation //
+// -- Accéder au contenu de l'utilisateur enregistré --//
 
-  // Si un userId correspond nous le recuperons depuis notre base de données //
+exports.getMyprofil = (req, res, next) => {
+  User.findOne({
+    where: { userId: req.userId },
+    attributes: { exclude: ["password_key"] },
+  })
 
-  //--- Si l'utilisateur est correctement récupéré nous l'appelons dans notre then --//
-  res.status(200).send("Contenu utilisateur.");
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({
+          error:
+            "Impossible de récupérer les détails de l'utilisateur actuellement connecté",
+        });
+      }
+      res.status(201).json({ user });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).json({ error: error });
+    });
 };
-
-// Jointure entre la table user et profil pour mettre à jour le profil //
-//exports.modifyProfil = (req, res) => {};
-
-// Suppression du user de notre BDD //
-//exports.deleteProfil = (req, res) => {};
