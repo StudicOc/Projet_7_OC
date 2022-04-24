@@ -33,13 +33,4 @@ app.use((req, res, next) => {
 app.use("/images", express.static(path.join(__dirname, "images"))); //---Path donne acces à notre chemin de system de fichiers.
 app.use("/api/auth", userRoutes);
 app.use("/api/profil", userRoutes);
-//--- Sécurisation des en-têtes HTTP---//
-
-app.use(helmet());
-
-app.disable("x-powered-by");
-
-//---Protection des attaques XSS--//
-app.use(helmet.xssFilter());
-
 module.exports = app;
