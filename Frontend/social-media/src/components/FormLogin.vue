@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h2 class="h4 font-weight-bold text-center mt-3">
+    <h2 class="h4 fw-bold text-center mt-3">
       Groupomania et votre réseau social interne
     </h2>
     <form
@@ -28,17 +28,14 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "FormLogin",
-
   data() {
     return {
       email: "",
       password_key: "",
     };
   },
-
   methods: {
     submitLogin() {
       const login = {
@@ -49,16 +46,10 @@ export default {
         .post("http://localhost:3000/api/auth/login", login)
         .then((response) => {
           let token = response.data.token;
-          //let userId = response.data.id;
-          localStorage.setItem("user", token);
-          //localStorage.setItem("id", userId);
-          //localStorage.getItem("id");
-
-          //this.$router.push(`/profil/${userId}`);
-
+          localStorage.setItem("token", token);
+          console.log(token);
           this.$router.push("/profil");
         })
-
         .catch((error) => {
           alert("Un utilisateur est déjà inscrit avec cette mail");
           console.log(error);
@@ -76,7 +67,6 @@ input {
   font-size: 1em;
   width: 100%;
 }
-
 button {
   height: 3.4rem;
   width: 12rem;
