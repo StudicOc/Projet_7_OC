@@ -21,8 +21,10 @@
         <div class="navbar-nav" v-if="isLogged">
           <router-link to="/profil"> Profil </router-link>
           <!--:to="`/profil/${profil.id}`"/${id}`-->
-          <router-link to="/addarticle">Poster un article</router-link>
-          <button value="Submit" @click="logout">deconnexion</button>
+          <router-link to="/add">Poster un article</router-link>
+          <a class="nav-link" @click.prevent="logout">
+            <font-awesome-icon icon="sign-out-alt" /> LogOut
+          </a>
         </div>
       </div>
     </div>
@@ -41,14 +43,14 @@ export default {
     };
   },
   created() {
-    this.isLogged = localStorage.getItem("user") ?? false;
+    this.isLogged = localStorage.getItem("token") ?? false;
   },
 
   methods: {
     //logout(): supprimer JWTdu stockage local
     logout() {
       this.isLogged = false;
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
       this.$router.push("/login");
     },
   },
