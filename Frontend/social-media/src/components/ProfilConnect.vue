@@ -40,7 +40,9 @@
                 <div class="card-body mx-auto">
                   <!--Suppression du compte-->
                   <div class="btn-danger rounded p-1">
-                    <button class="rounded p-2">Supprimer mon compte.</button>
+                    <button class="rounded p-2" @click="deleteAccount">
+                      Supprimer mon compte.
+                    </button>
                   </div>
                 </div>
               </div>
@@ -69,23 +71,19 @@ export default {
   //--Récupération des données--//
 
   created() {
-    this.isLogged = localStorage.getItem("user");
+    this.isLogged = localStorage.getItem("token");
   },
 
   mounted() {
-    //--- Segment dynamique l'id de l'utilisateur--//
-    //---Paramètre d'itinéraire --//
-    //const id = localStorage.getItem("id");
-    //console.log(id);
     axios.get("http://localhost:3000/api/profil/", {
       headers: {
-        Authorization: "Bearer, " + localStorage.getItem("user"),
+        Authorization: "Bearer, " + localStorage.getItem("token"),
       },
     });
     //console.log(this.$route.params.id);
 
     try {
-      let token = localStorage.getItem("user");
+      let token = localStorage.getItem("token");
       console.log(token);
       //décoder le jeton ici et l'attacher à l'objet utilisateur
       let decoded = VueJwtDecode.decode(token);
@@ -93,6 +91,27 @@ export default {
     } catch (error) {
       console.log(error, "error from decoding token");
     }
+  },
+
+  methods: {
+    deleteAccount() {
+      axios
+        .delete("http://localhost:3000/api/profil/", {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
+
+        .then((response) => {
+          console.log(response);
+          localStorage.clear();
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          alert("Un utilisateur est déjà inscrit avec cette mail");
+          console.log(error);
+        });
+    },
   },
 };
 </script>
