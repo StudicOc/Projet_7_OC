@@ -1,13 +1,14 @@
-// CONNEXION A LA BASE DE DONNEES //
+//FICHIER CONNEXION A LA BASE DE DONNEES //
 
 // Include Sequelize module
-
+//***Node.js Express exporte les API REST et interagit avec la base de données MySQL à l'aide de Sequelize ORM**//
 const dotenv = require("dotenv");
 dotenv.config();
 
-const Sequelize = require("sequelize");
+//***Import des modules nécessaires {sequelize} seulement***//
+const { Sequelize } = require("sequelize");
 
-// Creating new Object of Sequelize
+//***Connexion à la base de donnée*** //
 const sequelize = new Sequelize(
   process.env.DATAB,
   process.env.USER,
@@ -18,11 +19,15 @@ const sequelize = new Sequelize(
   }
 );
 
+//*****Tester notre connexion à notre base de donnée lors du demarrage du serveur  *****/
 try {
   sequelize.authenticate();
   console.log("Connecté à la base de données MySQL!");
 } catch (error) {
   console.error("Impossible de se connecter, erreur suivante :", error);
 }
+
+//******************************************//
+//*******Syncronisation des modéles*******//
 
 module.exports = sequelize;

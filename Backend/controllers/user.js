@@ -1,8 +1,12 @@
+//*********************** Chaque requête est testée avec Postman***********************/
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
+//******* Import de notre modéle utlisateur*******/
 const User = require("../models/User");
 
-// MIDDLEWARE SIGNUP ET LOGIN //
+//*******Enregistrement d'un nouvel utlisateur dans notre base de donnée *******/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password_key, 15)
@@ -23,9 +27,8 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//--- Controllers user.js--//
+//*******Connexion de notre utlisateur *******/
 exports.login = (req, res, next) => {
-  // --Vérification de l'utilisateur depuis notre base de données--//
   User.findOne({ where: { email: req.body.email } })
 
     .then((user) => {
@@ -62,7 +65,7 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-// -- Accéder au contenu de l'utilisateur enregistré --//
+//*******Accéder au contenu de l'utilisateur enregistré********//
 
 exports.getMyprofil = (req, res, next) => {
   User.findOne({
@@ -78,6 +81,27 @@ exports.getMyprofil = (req, res, next) => {
         });
       }
       res.status(201).json({ user });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(404).json({ error: error });
+    });
+};
+
+//********Supprimé un utlisateur de notre base de donnée*********/
+exports.deleteProfil = (req, res, next) => {
+  User.destroy({
+    //*******Nous vérifions si le champs userId de notre requête est présent********/
+    where: { userId: req.userId },
+  })
+
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({
+          error: "Impossible de supprimer l'tulisateur de notre base de donnée",
+        });
+      }
+      res.status(201).json({ message: " Utilisateur supprimé" });
     })
     .catch((error) => {
       console.log(error);

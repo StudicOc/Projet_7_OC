@@ -1,10 +1,8 @@
-// Include Sequelize module.
-const Sequelize = require("sequelize");
-
-// Import sequelize object,
-
+//***Import des modules nécessaire***//
+const { Sequelize } = require("sequelize");
 const sequelize = require("../config.db/db");
 
+//*** Définition du modele User de MYSQL Workbench***//
 const User = sequelize.define("user", {
   userId: {
     type: Sequelize.INTEGER,
