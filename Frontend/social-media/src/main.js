@@ -8,7 +8,7 @@ import "bootstrap";
 import axios from "axios";
 
 axios.defaults.headers.common["Authorization"] =
-  "Bearer, " + localStorage.getItem("user");
+  "Bearer, " + localStorage.getItem("token");
 
 import { FontAwesomeIcon } from "./Plugings/font-awesome";
 
