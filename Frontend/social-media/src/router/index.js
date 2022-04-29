@@ -3,7 +3,7 @@ import about from "@/views/Public/AboutGroupomania.vue";
 import SignupForm from "@/views/Public/SignupView.vue";
 import LoginForm from "@/views/Public/LoginView.vue";
 import ProfilConnect from "@/views/User/DashboardView.vue";
-import addarticle from "@/views/User/ArticleView.vue";
+import addArticle from "@/views/User/ArticleView.vue";
 
 const routes = [
   {
@@ -27,10 +27,12 @@ const routes = [
     name: "profil",
     component: ProfilConnect,
   },
+
+  //Ajouter un nouvel élément
   {
-    path: "/addarticle",
-    name: "PostArticle",
-    component: addarticle,
+    path: "/add",
+    name: "add",
+    component: addArticle,
   },
 ];
 
