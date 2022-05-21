@@ -1,38 +1,79 @@
 import { createStore } from "vuex";
-//import Axios from "axios";
-import createPersistedState from "vuex-persistedstate";
+import axios from "axios";
 
 export default createStore({
-  //*******State : Notre data store (data) est défini en tant que  state , définir des paire clé/valeur********//
-  //*******Récupérer les données de vuex $store.state********/
-  //*******Refactorer notre store: import {mapState} from 'vuex'********/
-  //*******Utilisation avec la syntaxe de décomposition avec dans computed ********/
-  //*******Component :...mapState()['','']********/
-  strict: true,
-  plugins: [createPersistedState()],
   state: {
-    token: "",
-    user: {},
+    //L'état initial pour le statut d'authentification, le jeton et les informations utilisateur//
+    //Component : demander à Vuex les propriétés de state de notre choix : import { mapState } from 'vuex'//
+
+    token: localStorage.getItem("token") || "", // Récupération du token depuis le localstorage//
+    user: {}, // Objet contenant les futurs données utilisateur (profil) //
   },
-  //***************/
-  //***************/
-  //*******Une autre méthode plus propre : Définir nos getters comme une fonction, hériter du state qui est passé en argument********/
-  getters: {},
 
-  //***************/
-  //******Synchrone, modifie le state*********/
-  //******** Mettre à jour et modifier nos données dans Vuex avec les mutations*********/
-  //*******Définir une mutation en assignant une fonction, passé le state en argument pour le muter********/
-  //*******Component : Appeler une mutation avec this.$store.commit(nom de la mutation)********/
-  mutations: {},
+  getters: {
+    // Notre fontion prendra en compte notre token pour la connexion et déconnexion, si ce dernier n'est pas défini //
+    isLoggedIn: (state) => !!state.token,
+  },
 
-  actions: {},
-  //***************/
-  //******Les mutations directement dans l'application vue sont considérés comme une mauvaise pratique*********/
-  //*******Définir une mutation en assignant une fonction, passé le content (contexte) en argument********/
-  //*******Le contexte donne accés au state ou commit, qui permettent d'acter nos mutations********//
-  //*******utilisation de la methode dispatch, lui donner le nom de l'action à declencher********/
-  //import { mapState, mapActions } from 'vuex'//
-  //methods: {...mapActions(['updateCount'])}
-  modules: {},
-});
+  mutations: {
+    //Elle contiendra un objet de toutes les propriétés responsables de modifications du  state//
+    //Définir une mutation en assignant une fonction, passé le state en argument pour le muter//
+    //Component :Actez une mutation :this.$store.commit('')
+
+    auth_request(state) {
+      state.status = "loading";
+    },
+
+    auth_success(state, token, user) {
+      state.token = token;
+      state.user = user;
+    },
+
+    auth_error(state) {
+      state.status = "error";
+    },
+    logout(state) {
+      state.status = "";
+      state.token = "";
+    },
+  },
+
+  actions: {
+    //Les actions dans Vuex nous permettent de valider des mutations dans le magasin vuex.//
+    // 2 actions importantes : login, logout //
+
+    submitLogin({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
+        axios({
+          url: "http://localhost:3000/api/auth/login",
+          data: user,
+          method: "POST",
+        })
+          .then((resp) => {
+            const token = resp.data.token;
+            const user = resp.data.user;
+            localStorage.setItem("token", token);
+            axios.defaults.headers.common["Authorization"] = "Bearer, " + token;
+            commit("auth_success", token, user);
+            resolve(resp);
+          })
+          .catch((err) => {
+            commit("auth_error");
+            localStorage.removeItem("token");
+            reject(err);
+          });
+      });
+    },
+
+    logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit("logout");
+        localStorage.removeItem("token");
+        delete axios.defaults.headers.common["Authorization"];
+        resolve();
+        reject();
+      });
+    },
+  },
+}); //Fin de la balise createStore //
