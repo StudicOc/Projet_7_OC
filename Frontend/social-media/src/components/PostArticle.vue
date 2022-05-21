@@ -1,13 +1,15 @@
 <template>
   <div class="container">
-    <h1 class="h4 font-weight-bold">Poster des maintenant votre article</h1>
-    <p>
+    <h1 class="h4 font-weight-bold text-center mt-3">
+      Poster des maintenant votre article
+    </h1>
+    <p class="font-weight-bold text-center">
       Nous vous rappelons que notre modérateur pourra supprimer votre poste si
       ce dernier ne respectes pas les règle de respect d'autrui*
     </p>
 
     <form
-      method="post"
+      method="POST"
       class="d-flex flex-column justify-content-center align-items-center mt-5"
     >
       <div class="form-group col-lg-5 pt-3">
@@ -20,26 +22,53 @@
         <textarea
           name="message"
           id="message"
-          v-model="message"
+          v-model="description"
           class="p-5"
         ></textarea>
       </div>
 
-      <div class="form-group col-lg-5 pt-3">
-        <label for="file">Sélectionner le fichier à envoyer :</label>
-        <input type="file" id="file" name="file" multiple />
-      </div>
-
       <div class="form-group col-lg-5 text-center pt-3">
-        <button type="submit" value="Submit">Poster mon article</button>
+        <button type="submit" value="Submit" @click.prevent="submitArticle">
+          Poster mon article
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "PostArticle",
+  data() {
+    return {
+      title: "",
+      description: "",
+    };
+  },
+  methods: {
+    submitArticle() {
+      if (/^.{1,10}$/.test(this.title)) {
+        alert("Votre titre doit contenir  au moins 10 caractères.");
+        return;
+      }
+      const data = {
+        title: this.title,
+        description: this.description,
+      };
+      axios
+        .post("http://localhost:3000/api/article/add", data)
+        .then((response) => {
+          console.log(response.data);
+          alert("Message posté");
+          window.location.reload();
+        })
+        .catch((error) => {
+          alert("Un utilisateur est déjà inscrit avec cette mail");
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
