@@ -27,7 +27,4 @@ try {
   console.error("Impossible de se connecter, erreur suivante :", error);
 }
 
-//******************************************//
-//*******Syncronisation des modéles*******//
-
-module.exports = sequelize;
+sequelize.import = module.exports = sequelize;
