@@ -10,13 +10,14 @@ const User = require("../models/User");
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password_key, 15)
-
+    //*******Construction de mon model *******/
     .then((hash) => {
       const user = User.build({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         password_key: hash,
+        isAdmin: false,
       });
       user
         .save()
@@ -29,6 +30,7 @@ exports.signup = (req, res, next) => {
 
 //*******Connexion de notre utlisateur *******/
 exports.login = (req, res, next) => {
+  // --Vérification de l'utilisateur depuis notre base de données--//
   User.findOne({ where: { email: req.body.email } })
 
     .then((user) => {
@@ -45,12 +47,13 @@ exports.login = (req, res, next) => {
 
           res.status(200).json({
             message: "Connexion réussie",
+
             token: jwt.sign(
               {
                 userId: user.userId,
+                email: user.email,
                 firstname: user.firstname,
                 lastname: user.lastname,
-                email: user.email,
                 createdAt: user.createdAt,
               },
               "RANDOM_TOKEN_SECRET",
@@ -65,7 +68,7 @@ exports.login = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//*******Accéder au contenu de l'utilisateur enregistré********//
+// -- Accéder au contenu de l'utilisateur enregistré --//
 
 exports.getMyprofil = (req, res, next) => {
   User.findOne({
@@ -86,6 +89,17 @@ exports.getMyprofil = (req, res, next) => {
       console.log(error);
       res.status(404).json({ error: error });
     });
+};
+
+exports.modifyMyprofil = (req, res, next) => {
+  User.update({ email: req.body.email }, { where: { userId: req.userId } })
+    .then(() =>
+      res.status(201).json({
+        confirmation: "Email modifié avec succès",
+        email: req.body.email,
+      })
+    )
+    .catch((err) => res.status(500).json(err));
 };
 
 //********Supprimé un utlisateur de notre base de donnée*********/
