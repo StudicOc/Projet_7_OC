@@ -1,19 +1,32 @@
 const express = require("express");
 const app = express();
 
-//****IMPORT DE NOTRE BDD ****/
-const tweet = require("./models/Tweet");
-//const user = require("./models/User");
-tweet.sequelize.sync();
-
-//***********Aide à analyser la requête et à créer l' req.bodyobjet********** //
-app.use(express.json());
-
-const userRoutes = require("./routes/user");
-//const articleRoutes = require("./routes/article");
-
+//**********SECURITY************ //
+//Securisez l'applications avec les recommendations lowasp//
+//Protection de notre BDD, envoie chiffré/
 const dotenv = require("dotenv");
 dotenv.config();
+//Protection de notre appli express//
+const helmet = require("helmet");
+app.use(helmet());
+// L'inspecteur de code n'affichera pas le framework utlisé //
+app.disable("x-powered-by");
+//*****Middleware pour protéger la session et les cookies*****/
+//const session = require("express-session");
+//*****Middleware pour protéger les attaques XSS*****/
+
+//****IMPORT DE NOTRE BDD ****/
+const dataBase = require("./models/User");
+const DDB = require("./models/Article");
+DDB.sequelize.sync();
+//***********Aide à analyser la requête********** //
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+//**********Import des routeurs**********//
+const userRoutes = require("./routes/user");
+const articlesRoutes = require("./routes/articles");
+const articleRoutes = require("./routes/article");
 
 //********Path donne acces à notre chemin de system de fichiers************//
 const path = require("path");
@@ -37,5 +50,7 @@ app.use((req, res, next) => {
 app.use("/images", express.static(path.join(__dirname, "images"))); //---Path donne acces à notre chemin de system de fichiers.
 app.use("/api/auth", userRoutes);
 app.use("/api/profil", userRoutes);
-//app.use("/api/article", articleRoutes);
+app.use("/api/articles", articlesRoutes);
+app.use("/api/article", articleRoutes);
+
 module.exports = app;
