@@ -1,8 +1,11 @@
-//***Import des modules nécessaire***//
+// Include Sequelize module.
 const { Sequelize } = require("sequelize");
+const Article = require("../models/Article");
+
+// Import sequelize object,
+
 const sequelize = require("../config.db/db");
 
-//*** Définition du modele User de MYSQL Workbench***//
 const User = sequelize.define("user", {
   userId: {
     type: Sequelize.INTEGER,
@@ -21,6 +24,13 @@ const User = sequelize.define("user", {
   email: { type: Sequelize.STRING, allowNull: false, unique: true },
 
   password_key: { type: Sequelize.STRING, allowNull: false },
+
+  isAdmin: { type: Sequelize.TINYINT, allowNull: false },
 });
+
+User.associate = function (models) {
+  // associations can be defined here
+  models.User.hasMany(models.Article);
+};
 
 module.exports = User;
