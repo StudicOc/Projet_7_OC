@@ -20,9 +20,11 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav" v-if="isLoggedIn">
               <!--Lien de de notre nav relié au routeur-->
-              <router-link v-if="isLoggedIn" to="/profil"
-                >Mon espace</router-link
-              >
+
+              <router-link v-if="isLoggedIn" to="/profil">
+                <font-awesome-icon icon="user" /> Compte
+              </router-link>
+
               <router-link v-if="isLoggedIn" to="/article/add"
                 >Poster un article</router-link
               >
@@ -54,7 +56,7 @@
 <script>
 export default {
   name: "App",
-  // Propriété calculée //
+
   computed: {
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
@@ -74,6 +76,10 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
+$color-primary: #fd2d01;
+$color-secondary: #ffd7d7;
+$color-tertiary: #4e5166;
+
 html {
   background-color: #f1f1f1;
 }
@@ -86,7 +92,7 @@ html {
 }
 
 nav {
-  background-color: #2c3e50;
+  background-color: $color-tertiary;
   color: white;
   a {
     font-size: 15px;

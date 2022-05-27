@@ -1,23 +1,23 @@
-//*********************** Chaque requête est testée avec Postman***********************/
+//*************************Chaque requête est testée avec Postman***********************/
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-//******* Import de notre modéle utlisateur*******/
+//******* Importation de notre modéle User*******/
 const User = require("../models/User");
 
-//*******Enregistrement d'un nouvel utlisateur dans notre base de donnée *******/
+//*******Enregistrement d'un nouveluser dans notre BDD *******/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password_key, 15)
-    //*******Construction de mon model *******/
+    //*******Construction de mon model User *******/
     .then((hash) => {
       const user = User.build({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         password_key: hash,
-        isAdmin: false,
+        isAdmin: req.body.isAdmin,
       });
       user
         .save()
@@ -28,9 +28,9 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//*******Connexion de notre utlisateur *******/
+//*******Connexion de notre user *******/
 exports.login = (req, res, next) => {
-  // --Vérification de l'utilisateur depuis notre base de données--//
+  // --Vérification de l'utilisateur depuis notre BDD--//
   User.findOne({ where: { email: req.body.email } })
 
     .then((user) => {
@@ -54,6 +54,7 @@ exports.login = (req, res, next) => {
                 email: user.email,
                 firstname: user.firstname,
                 lastname: user.lastname,
+                isAdmin: user.isAdmin,
                 createdAt: user.createdAt,
               },
               "RANDOM_TOKEN_SECRET",
@@ -92,17 +93,30 @@ exports.getMyprofil = (req, res, next) => {
 };
 
 exports.modifyMyprofil = (req, res, next) => {
-  User.update({ email: req.body.email }, { where: { userId: req.userId } })
+  const modifyprofil = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+  };
+  console.log(modifyprofil);
+  User.update(
+    {
+      ...modifyprofil,
+    },
+    { where: { userId: req.userId } }
+  )
     .then(() =>
       res.status(201).json({
-        confirmation: "Email modifié avec succès",
+        confirmation: "Profil modifié",
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
       })
     )
     .catch((err) => res.status(500).json(err));
 };
 
-//********Supprimé un utlisateur de notre base de donnée*********/
+//********Supprimé un utlisateur de notre BDD*********/
 exports.deleteProfil = (req, res, next) => {
   User.destroy({
     //*******Nous vérifions si le champs userId de notre requête est présent********/
@@ -112,7 +126,8 @@ exports.deleteProfil = (req, res, next) => {
     .then((user) => {
       if (!user) {
         return res.status(401).json({
-          error: "Impossible de supprimer l'tulisateur de notre base de donnée",
+          error:
+            "Impossible de supprimer l'utilisateur de notre base de donnée",
         });
       }
       res.status(201).json({ message: " Utilisateur supprimé" });

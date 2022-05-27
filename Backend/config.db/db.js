@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
   }
 );
 
-//*****Tester notre connexion à notre base de donnée lors du demarrage du serveur  *****/
+//*****Tester notre connexion à notre BDD lors du démarrage du serveur  *****/
 try {
   sequelize.authenticate();
   console.log("Connecté à la base de données MySQL!");

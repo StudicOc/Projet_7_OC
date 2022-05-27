@@ -26,6 +26,9 @@ const User = sequelize.define("user", {
   password_key: { type: Sequelize.STRING, allowNull: false },
 
   isAdmin: { type: Sequelize.TINYINT, allowNull: false },
+
+  createdAt: { type: Sequelize.DATE, allowNull: false },
+  updatedAt: { type: Sequelize.DATE, allowNull: false },
 });
 
 User.associate = function (models) {

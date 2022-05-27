@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index";
-import about from "@/views/Public-page/AboutGroupomania.vue";
-import SignupForm from "@/views/Public-page/SignupView.vue";
-import LoginForm from "@/views/Public-page/LoginView.vue";
-import ProfilConnect from "@/views/Authenticated/DashboardView.vue";
-import addArticle from "@/views//Authenticated/PostArticleView.vue";
-import ArticlesPage from "@/views/Authenticated/ArticlesPage.vue";
+import about from "@/views/Public-page/About.vue";
+import SignupForm from "@/views/Public-page/Signup.vue";
+import LoginForm from "@/views/Public-page/Login.vue";
+import ProfilConnect from "@/views/Authenticated/DashboardUser.vue";
+import addArticle from "@/views//Authenticated/AddArticle.vue";
+import Articles from "@/views/Authenticated/ArticlesList.vue";
+import Article from "@/views/Authenticated/IdArticle.vue";
 
 const routes = [
   {
@@ -32,7 +33,12 @@ const routes = [
       requiresAuth: true,
     },
   },
-
+  {
+    path: "/article/:id",
+    name: "ArticleID",
+    component: Article,
+    meta: { requiresAuth: true },
+  },
   {
     path: "/article/add",
     name: "add",
@@ -44,8 +50,8 @@ const routes = [
 
   {
     path: "/articles",
-    name: "ArticlesPage",
-    component: ArticlesPage,
+    name: "Articles",
+    component: Articles,
     meta: {
       requiresAuth: true,
     },
@@ -56,10 +62,12 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+//*************Fonction qui nous permettra d'afficher nos pages si seulement l'tulisateur est authentifié**************/
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
+    //Les routes nécessite une authentification, vérifie si vous êtes connecté//
+    // Si non, une redirection est faite sur la page de connexion//
 
     if (!store.getters.isLoggedIn) {
       next(router.push("/login"));

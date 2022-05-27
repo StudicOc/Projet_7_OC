@@ -1,5 +1,4 @@
-// Middleware d'authentification JWT//
-///Couche de sécurité //
+//************Middleware d'authentification JWT********************//
 
 const jwt = require("jsonwebtoken");
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="h4 font-weight-bold text-center mt-3">
+    <h1 class="h4 font-weight-bold text-center mt-3 pt-3">
       Poster des maintenant votre article
     </h1>
     <p class="font-weight-bold text-center">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import ArticleDataService from "../Service/ArticleDataService";
 export default {
   name: "PostArticle",
   data() {
@@ -52,12 +52,11 @@ export default {
         alert("Votre titre doit contenir  au moins 10 caractères.");
         return;
       }
-      const data = {
+      let data = {
         title: this.title,
         description: this.description,
       };
-      axios
-        .post("http://localhost:3000/api/article/add", data)
+      ArticleDataService.postArticle(data)
         .then((response) => {
           console.log(response.data);
           alert("Message posté");
@@ -73,6 +72,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color-primary: #fd2d01;
+$color-secondary: #ffd7d7;
+$color-tertiary: #4e5166;
+
 input {
   border: none;
   outline: none;
@@ -86,27 +89,18 @@ button {
   width: 12rem;
   border-radius: 1em;
   font-size: 14px;
-  background: linear-gradient(25deg, #3c969c, rgb(72, 14, 86));
+  background: linear-gradient(25deg, $color-primary, $color-secondary);
   border: none;
-  text-transform: uppercase;
   letter-spacing: 0.08em;
   cursor: pointer;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
   transition-property: transform;
-  transition-duration: 400ms; /* 400ms pour arriver et partir*/
-  -moz-transition-property: transform;
-  -moz-transition-duration: 400ms;
-  -webkit-transition-property: transform;
-  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+
   &:hover {
     transform: scale(1.15);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     filter: brightness(1.1);
-    -webkit-transform: scale(1.15);
-    -moz-transform: scale(1.15);
-    -ms-transform: scale(1.15);
-    -o-transform: scale(1.15);
-    /*animation: name duration timing-function delay iteration-count direction fill-mode;*/
   }
 }
 </style>

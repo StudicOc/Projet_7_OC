@@ -1,22 +1,18 @@
-//----GESTION DES FICHIERS ENTRANTS---//
-
 const multer = require("multer");
 
-//---Type de fichier accepté--//
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/gif": "gif",
+  "image/webp": "webp",
 };
 
-//--- Objet de config pour multer---//
 const storage = multer.diskStorage({
-  //--First argument--//
   destination: (req, file, callback) => {
-    callback(null, "images"); //---Enregistrement ---//
+    callback(null, "images");
   },
-  //---Next argument---//
+
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
