@@ -51,7 +51,8 @@
       <article>
         <div class="card mb-4">
           <p class="card-header me-auto font-weight-bolder">
-            Animé par : {{ article.userId }}, le :
+            Animé par : {{ article.userId }}, publié le :
+            {{ formatDate(article.createdAt) }}
           </p>
 
           <div class="card-body">
@@ -69,7 +70,8 @@
 
 <script>
 import ArticleDataService from "../Service/ArticleDataService";
-
+//import formatDateMixin from "../Service/formatDateMixin";
+import FormatDateDay from "../Service/FormatDateDay";
 export default {
   name: "WorkplacePublication",
   data() {
@@ -77,9 +79,15 @@ export default {
       articles: [],
       title: "",
       description: "",
+      createdAt: "",
     };
   },
-
+  mixins: [FormatDateDay],
+  computed: {
+    formattedDate() {
+      return this.formatDate(this.createdAt);
+    },
+  },
   methods: {
     submitArticle() {
       if (/^.{1,10}$/.test(this.title)) {
@@ -101,6 +109,7 @@ export default {
           console.log(error);
         });
     },
+
     showArticles() {
       ArticleDataService.getAll()
 
