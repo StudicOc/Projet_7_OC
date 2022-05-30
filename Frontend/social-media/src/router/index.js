@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index";
-import about from "@/views/Public-page/About.vue";
+//********Public content*********/
+import About from "@/views/Public-page/About.vue";
 import SignupForm from "@/views/Public-page/Signup.vue";
 import LoginForm from "@/views/Public-page/Login.vue";
+//********Private content*********/
 import ProfilConnect from "@/views/Authenticated/DashboardUser.vue";
-import addArticle from "@/views//Authenticated/AddArticle.vue";
-import Articles from "@/views/Authenticated/ArticlesList.vue";
-import Article from "@/views/Authenticated/IdArticle.vue";
+import Workplace from "@/views/Authenticated/PublicationPage.vue"; //********Display of publications and form to post a message*********/
+import Article from "@/views/Authenticated/ArticlePage.vue"; //********Manage an article with its ID*********/
 
 const routes = [
   {
     path: "/",
     name: "about",
-    component: about,
+    component: About,
   },
 
   {
@@ -25,6 +26,7 @@ const routes = [
     name: "login",
     component: LoginForm,
   },
+  //****************/
   {
     path: "/profil",
     name: "profil",
@@ -42,7 +44,7 @@ const routes = [
   {
     path: "/article/add",
     name: "add",
-    component: addArticle,
+    component: Workplace,
     meta: {
       requiresAuth: true,
     },
@@ -51,7 +53,7 @@ const routes = [
   {
     path: "/articles",
     name: "Articles",
-    component: Articles,
+    component: Workplace,
     meta: {
       requiresAuth: true,
     },
