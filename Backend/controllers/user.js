@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 //******* Importation de notre modéle User*******/
 const User = require("../models/User");
 
-//*******Enregistrement d'un nouveluser dans notre BDD *******/
+//*******Enregistrement d'un user dans notre BDD *******/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password_key, 15)
@@ -22,7 +22,12 @@ exports.signup = (req, res, next) => {
       user
         .save()
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
-        .catch((error) => res.status(400).json({ error }));
+        .catch(() =>
+          res.status(400).json({
+            message:
+              "Vérifier vos saisies si celle-ci respecte le format demandé",
+          })
+        );
     })
 
     .catch((error) => res.status(500).json({ error }));
@@ -31,6 +36,7 @@ exports.signup = (req, res, next) => {
 //*******Connexion de notre user *******/
 exports.login = (req, res, next) => {
   // --Vérification de l'utilisateur depuis notre BDD--//
+
   User.findOne({ where: { email: req.body.email } })
 
     .then((user) => {
@@ -42,7 +48,9 @@ exports.login = (req, res, next) => {
 
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
+            return res
+              .status(401)
+              .json({ error: "Vérifier votre mail ou mot de passe!" });
           }
 
           res.status(200).json({
@@ -51,9 +59,9 @@ exports.login = (req, res, next) => {
             token: jwt.sign(
               {
                 userId: user.userId,
-                email: user.email,
                 firstname: user.firstname,
                 lastname: user.lastname,
+                email: user.email,
                 isAdmin: user.isAdmin,
                 createdAt: user.createdAt,
               },
@@ -108,9 +116,7 @@ exports.modifyMyprofil = (req, res, next) => {
     .then(() =>
       res.status(201).json({
         confirmation: "Profil modifié",
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
+        modifyprofil,
       })
     )
     .catch((err) => res.status(500).json(err));
