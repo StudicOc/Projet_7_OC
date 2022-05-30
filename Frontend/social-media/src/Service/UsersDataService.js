@@ -3,9 +3,7 @@
 import http from "../Service/http-common";
 
 class UsersDataService {
-  getUser() {
-    return http.get("/profil");
-  }
+  //getUser() {return http.get("/profil");}
   putUser(data) {
     return http.put("/profil", data);
   }
