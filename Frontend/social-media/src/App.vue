@@ -25,12 +25,12 @@
                 <font-awesome-icon icon="user" /> Compte
               </router-link>
 
-              <router-link v-if="isLoggedIn" to="/article/add"
+              <!--<router-link v-if="isLoggedIn" to="/article/add"
                 >Poster un article</router-link
-              >
+              -->
 
               <router-link v-if="isLoggedIn" to="/articles"
-                >Article</router-link
+                >Workplace</router-link
               >
               <a href="#" v-if="isLoggedIn" class="nav-link" @click="logout"
                 >Logout</a
