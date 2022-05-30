@@ -64,7 +64,7 @@ export default {
       lastname: "",
       email: "",
       password_key: "",
-      isAdmin: "",
+      isAdmin: 0,
       msg: [],
     };
   },
@@ -131,7 +131,7 @@ export default {
         password_key: this.password_key,
         isAdmin: this.isAdmin,
       };
-      //console.log(dataUser);
+      console.log(dataUser);
       axios
         .post("http://localhost:3000/api/auth/signup", dataUser)
         .then((response) => {
