@@ -9,6 +9,7 @@
       <a href="#">Amis</a>
     </nav>
     <main>
+      <PostPublication />
       <WorkplacePublication />
     </main>
     <aside class="aside">
@@ -20,11 +21,13 @@
 
 <script>
 import WorkplacePublication from "../../components/WorkplacePublication.vue";
+import PostPublication from "../../components/PostArticle.vue";
 
 export default {
   name: "PublicationPage",
   components: {
     WorkplacePublication,
+    PostPublication,
   },
 };
 </script>
