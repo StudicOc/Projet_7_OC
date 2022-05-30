@@ -1,46 +1,5 @@
 <template>
   <section>
-    <div class="container custom-container pb-3">
-      <h1 class="h4 font-weight-bold text-center mt-3 pt-3">
-        Poster une publication
-      </h1>
-      <p class="font-weight-bold text-center">
-        Nous vous rappelons que notre modérateur pourra supprimer votre poste si
-        ce dernier ne respectes pas les règles de respect d'autrui*
-      </p>
-
-      <router-link to="/article/add">
-        <form method="POST">
-          <div class="form-group">
-            <label for="title">Titre</label>
-            <input
-              class="form-control"
-              type="text"
-              name="title"
-              id="title"
-              v-model="title"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea
-              class="form-control"
-              name="message"
-              id="message"
-              v-model="description"
-              rows="1"
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <button type="submit" value="Submit" @click.prevent="submitArticle">
-              Créer une publication
-            </button>
-          </div>
-        </form>
-      </router-link>
-    </div>
-  </section>
-  <section>
     <div class="text-center">
       <button class="message mb-3 mt-2">
         <strong>Publications</strong>
@@ -69,17 +28,15 @@
 </template>
 
 <script>
-import ArticleDataService from "../Service/ArticleDataService";
-//import formatDateMixin from "../Service/formatDateMixin";
+//import ArticleDataService from "../Service/ArticleDataService";
+
+import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
 export default {
   name: "WorkplacePublication",
   data() {
     return {
       articles: [],
-      title: "",
-      description: "",
-      createdAt: "",
     };
   },
   mixins: [FormatDateDay],
@@ -89,30 +46,16 @@ export default {
     },
   },
   methods: {
-    submitArticle() {
-      if (/^.{1,10}$/.test(this.title)) {
-        alert("Votre titre doit contenir  au moins 10 caractères.");
-        return;
-      }
-      let data = {
-        title: this.title,
-        description: this.description,
-      };
-      ArticleDataService.postArticle(data)
-        .then((response) => {
-          console.log(response.data);
-          alert("Message posté");
-          window.location.reload();
-        })
-        .catch((error) => {
-          alert("Un utilisateur est déjà inscrit avec cette mail");
-          console.log(error);
-        });
-    },
-
+    //submitArticle() {},
     showArticles() {
-      ArticleDataService.getAll()
+      // ArticleDataService.getAll()
 
+      axios
+        .get("http://localhost:3000/api/articles", {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
         .then((response) => {
           this.articles = response.data;
         })
@@ -124,7 +67,6 @@ export default {
         });
     },
   },
-
   mounted() {
     this.showArticles();
   },
@@ -138,7 +80,6 @@ $color-tertiary: #4e5166;
 .card-header {
   background-color: #ffd7d7;
 }
-
 a {
   color: inherit;
   text-decoration: none;
@@ -164,7 +105,6 @@ button {
     filter: brightness(1.1);
   }
 }
-
 .custom-container {
   border: 2px solid none;
   border-radius: 2em;
