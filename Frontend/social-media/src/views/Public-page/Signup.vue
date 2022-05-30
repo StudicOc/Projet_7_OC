@@ -140,9 +140,6 @@ export default {
           this.$router.push("/login");
         })
         .catch((error) => {
-          alert(
-            "Vérifier les informations saisies du formulaire d'inscription"
-          );
           console.log(error);
         });
     },
