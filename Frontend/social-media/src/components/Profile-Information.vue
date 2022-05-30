@@ -23,58 +23,61 @@
                   </div>
                 </div>
                 <div class="card text-center">
-                  <div class="text-center">
-                    <p>Informations personnelles</p>
+                  <p>Informations personnelles</p>
 
-                    <!--DEBUT DU FORMULAIRE-->
-                    <!--Le formulaire doit être capable de modifier le mail affiché de l'utilisateur-->
-                    <p class="font-weight-bold" for="change-email">
-                      Besoin de modifier votre adresse e-mail ?
-                    </p>
-                    <form class="background-style">
-                      <div class="form-group">
-                        <label class="form-label">Prénom</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          :value="user.firstname"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label class="form-label">Nom</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          :value="user.lastname"
-                        />
-                      </div>
+                  <!--DEBUT DU FORMULAIRE-->
+                  <!--Le formulaire doit être capable de modifier le mail affiché de l'utilisateur-->
+                  <p class="font-weight-bold">
+                    Besoin de modifier votre adresse e-mail ?
+                  </p>
+                  <form>
+                    <div class="form-group">
+                      <label class="form-label">Prénom</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="user.firstname"
+                        aria-label="First name"
+                      />
+                      <span v-if="msg.lastname">{{ msg.firstname }}</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nom</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="user.lastname"
+                        aria-label="Last name"
+                      />
+                      <span v-if="msg.lastname">{{ msg.lastname }}</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        v-model="user.email"
+                        aria-label="Email"
+                      />
+                      <span v-if="msg.email">{{ msg.email }}</span>
+                    </div>
 
-                      <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
+                    <div class="btn rounded p-1">
+                      <p>
+                        Une fois votre profil mise à jours, vous serez redirigé
+                        vers la page de connexion*
+                      </p>
 
-                        <input
-                          type="email"
-                          class="form-control"
-                          :value="user.email"
-                        />
-                      </div>
-
-                      <div class="btn rounded p-1">
-                        <p>
-                          Une fois votre profil mise à jours, vous serez
-                          redirigé vers la page de connexion*
-                        </p>
-
-                        <button
-                          class="rounded p-2"
-                          @click.prevent="updateProfil"
-                        >
-                          Enregistrer
-                        </button>
-                      </div>
-                    </form>
-                    <!--FIN DU FORMULAIRE-->
-                  </div>
+                      <button
+                        type="button"
+                        class="rounded p-2"
+                        @click.prevent="updateProfil"
+                      >
+                        Enregistrer
+                      </button>
+                    </div>
+                  </form>
+                  <!--FIN DU FORMULAIRE-->
                 </div>
 
                 <div class="card-body">
@@ -107,8 +110,9 @@
 </template>
 
 <script>
-import UsersDataService from "../Service/UsersDataService";
 import VueJwtDecode from "vue-jwt-decode";
+import UsersDataService from "../Service/UsersDataService";
+import axios from "axios";
 export default {
   name: "ProfilConnect",
   data() {
@@ -117,21 +121,48 @@ export default {
       firstname: "",
       lastname: "",
       email: "",
+      msg: [],
     };
+  },
+  watch: {
+    "user.firstname"(newVal) {
+      this.validateEmail(newVal);
+    },
+    "user.lastname"(newVal) {
+      this.validateEmail(newVal);
+    },
+    "user.email"(newVal) {
+      this.validateEmail(newVal);
+    },
   },
 
   methods: {
-    getProfilUser() {
-      UsersDataService.getUser()
-        .then((response) => {
-          let token = localStorage.getItem("token");
-          let decoded = VueJwtDecode.decode(token);
-          this.user = decoded;
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error, "error from decoding token");
-        });
+    validateFirstname(newVal) {
+      const regexName = /([A-Z])\w+/g;
+      if (regexName.test(newVal)) {
+        this.msg["firstname"] = "Format accepté";
+      } else {
+        this.msg["firstname"] =
+          "Votre Prénom doit contenir une lettre majuscule et au moins 2 lettres ";
+      }
+    },
+
+    validateLastname(newVal) {
+      //const regexName = /^[a-zA-Z-\s]+$/;
+      const regexName = /([A-Z])\w+/g;
+      if (regexName.test(newVal)) {
+        this.msg["lastname"] = "Format accepté";
+      } else {
+        this.msg["lastname"] =
+          "Votre Prénom doit contenir une lettre majuscule et au moins 2 lettres";
+      }
+    },
+    validateEmail(newVal) {
+      if (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(newVal)) {
+        this.msg["email"] = "Mail valide";
+      } else {
+        this.msg["email"] = "Le format mail n'est pas respecté";
+      }
     },
 
     updateProfil() {
@@ -140,13 +171,15 @@ export default {
         lastname: this.user.lastname,
         email: this.user.email,
       };
-      UsersDataService.putUser(data);
-      this.$store
-        .dispatch("logout")
+
+      this.$store.dispatch("logout");
+      UsersDataService.putUser(data)
         .then((response) => {
-          this.data = response.data.data;
-          this.$router.push("/login");
+          this.data = response.data;
           console.log("Data: ", response.data);
+          this.$router.push("/login");
+          alert("Modification prise en compte, veuillez-vous reconnecter!");
+          //refresh token
         })
         .catch((error) => {
           console.error("Something went wrong!", error);
@@ -167,7 +200,21 @@ export default {
   },
 
   mounted() {
-    this.getProfilUser();
+    axios
+      .get("http://localhost:3000/api/profil/", {
+        headers: {
+          Authorization: "Bearer, " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        let token = localStorage.getItem("token");
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error, "error from decoding token");
+      });
   },
 };
 </script>
