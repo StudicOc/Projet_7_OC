@@ -4,17 +4,12 @@
 import http from "../Service/http-common";
 
 class ArticleDataService {
-  //****L'id de notre fonction fera référence à notre params de requête ****/
   postArticle(data) {
     return http.post("/article/add", data);
   }
-  getAll() {
-    return http.get("/articles");
-  }
-
-  getOne(id) {
-    return http.get(`/article/${id}`);
-  }
+  //getAll() {return http.get("/articles");}
+  //****L'id de notre fonction fera référence à notre params de requête ****/
+  // getOne(id) { return http.get(`/article/${id}`)}
 }
 
 export default new ArticleDataService();
