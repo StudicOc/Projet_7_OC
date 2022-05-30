@@ -60,6 +60,7 @@ export default createStore({
           })
           .catch((err) => {
             commit("auth_error");
+            alert("Mot de passe incorrect");
             localStorage.removeItem("token");
             reject(err);
           });
