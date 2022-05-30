@@ -15,20 +15,50 @@ const User = sequelize.define("user", {
     allowNull: false,
 
     primaryKey: true,
+    validate: { notEmpty: true },
   },
 
-  firstname: { type: Sequelize.STRING, allowNull: false },
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
 
-  lastname: { type: Sequelize.STRING, allowNull: false },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
 
-  email: { type: Sequelize.STRING, allowNull: false, unique: true },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+    validate: { notEmpty: true },
+  },
 
-  password_key: { type: Sequelize.STRING, allowNull: false },
+  password_key: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
 
-  isAdmin: { type: Sequelize.TINYINT, allowNull: false },
+  isAdmin: {
+    type: Sequelize.TINYINT,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
 
-  createdAt: { type: Sequelize.DATE, allowNull: false },
-  updatedAt: { type: Sequelize.DATE, allowNull: false },
+  createdAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
+  updatedAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    validate: { notEmpty: true },
+  },
 });
 
 User.associate = function (models) {
