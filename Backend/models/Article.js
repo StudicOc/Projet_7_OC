@@ -28,14 +28,22 @@ const Article = sequelize.define("article", {
   title: {
     type: Sequelize.STRING(80),
     allowNull: false,
+    validate: { notEmpty: true },
   },
   description: {
     type: Sequelize.STRING(250),
     allowNull: false,
+    validate: { notEmpty: true },
   },
 
-  createdAt: { type: Sequelize.DATE, allowNull: false },
-  updatedAt: { type: Sequelize.DATE, allowNull: false },
+  createdAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  updatedAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
 });
 
 Article.associate = function (models) {
