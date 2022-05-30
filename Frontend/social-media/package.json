@@ -16,6 +16,7 @@
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.2",
     "less-loader": "^10.2.0",
     "vue": "^3.2.34",
     "vue-jwt-decode": "^0.1.0",
