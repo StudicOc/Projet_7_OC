@@ -10,7 +10,7 @@
     </nav>
     <main>
       <PostPublication />
-      <WorkplacePublication />
+      <AllArticle />
     </main>
     <aside class="aside">
       <p class="font-weight-bold">Groupes suggérés</p>
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import WorkplacePublication from "../../components/WorkplacePublication.vue";
+import AllArticle from "../../components/AllArticle.vue";
 import PostPublication from "../../components/PostArticle.vue";
 
 export default {
   name: "PublicationPage",
   components: {
-    WorkplacePublication,
+    AllArticle,
     PostPublication,
   },
 };
