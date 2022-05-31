@@ -1,35 +1,36 @@
 <template>
   <section>
     <div class="text-center">
-      <button class="message mb-3 mt-2">
+      <button class="message mb-2 mt-2">
         <strong>Publications</strong>
+        <p>Pour modifier votre cliquez dessus... 😉</p>
       </button>
     </div>
     <div v-for="article of articles" :key="article._id">
-      <!--<router-link :to="`/article/${article._id}`">-->
-      <article>
-        <div class="card mb-4">
-          <p class="card-header me-auto font-weight-bolder">
-            Animé par : {{ article.userId }}, publié le :
-            {{ formatDate(article.createdAt) }}
-          </p>
+      <router-link :to="{ name: 'ArticleID', params: { id: article._id } }">
+        <!-- <router-link :to="{ name: 'ArticleID', params: { id: article._id } }">-->
+        <article>
+          <div class="card mb-4">
+            <p class="card-header me-auto">
+              <strong> Publié par :</strong> {{ article.userId }},
+              <strong>le </strong>
+              {{ formatDate(article.createdAt) }}
+            </p>
 
-          <div class="card-body">
-            <h1 class="card-title h6 font-weight-bolder font-italic">
-              {{ article.title }}
-            </h1>
-            <p class="card-text">{{ article.description }}</p>
+            <div class="card-body">
+              <h1 class="card-title h6 font-weight-bolder font-italic">
+                {{ article.title }}
+              </h1>
+              <p class="card-text">{{ article.description }}</p>
+            </div>
           </div>
-        </div>
-      </article>
-      <!--</router-link>-->
+        </article>
+      </router-link>
     </div>
   </section>
 </template>
 
 <script>
-//import ArticleDataService from "../Service/ArticleDataService";
-
 import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
 export default {
@@ -45,11 +46,9 @@ export default {
       return this.formatDate(this.createdAt);
     },
   },
-  methods: {
-    //submitArticle() {},
-    showArticles() {
-      // ArticleDataService.getAll()
 
+  methods: {
+    showArticles() {
       axios
         .get("http://localhost:3000/api/articles", {
           headers: {
@@ -67,6 +66,7 @@ export default {
         });
     },
   },
+
   mounted() {
     this.showArticles();
   },
@@ -92,7 +92,7 @@ button {
   padding: 0.5rem;
   border-radius: 2em;
   font-size: 14px;
-  background: linear-gradient(25deg, $color-primary, $color-secondary);
+  background: linear-gradient(25deg, $color-tertiary, $color-secondary);
   border: none;
   letter-spacing: 0.08em;
   cursor: pointer;
