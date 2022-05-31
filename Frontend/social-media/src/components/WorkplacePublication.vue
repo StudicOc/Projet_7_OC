@@ -105,9 +105,4 @@ button {
     filter: brightness(1.1);
   }
 }
-.custom-container {
-  border: 2px solid none;
-  border-radius: 2em;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
-}
 </style>
