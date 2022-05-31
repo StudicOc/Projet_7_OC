@@ -30,10 +30,10 @@
               -->
 
             <router-link v-if="isLoggedIn" to="/articles"
-              >Workplace</router-link
+              ><font-awesome-icon icon="home" />Workplace</router-link
             >
             <a href="#" v-if="isLoggedIn" class="nav-link" @click="logout"
-              >Logout</a
+              ><font-awesome-icon icon="sign-out-alt" />Logout</a
             >
           </div>
           <span v-else>
@@ -100,5 +100,9 @@ nav {
     color: inherit;
     font-weight: bold;
   }
+}
+
+.svg-inline--fa {
+  margin-right: 2px;
 }
 </style>
