@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ProfilConnect from "../../components/Profile-Information.vue";
+import ProfilConnect from "../../components/ProfileInformation.vue";
 
 export default {
   name: "DashboardUser",
