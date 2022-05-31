@@ -57,12 +57,7 @@ a:hover {
   color: inherit;
   text-decoration: none;
 }
-.message {
-  border: solid 1px #dbdbdb;
-  border-radius: 5px;
-  background: #fd2d01;
-  padding: 8px;
-}
+
 .badge {
   color: black;
 }
