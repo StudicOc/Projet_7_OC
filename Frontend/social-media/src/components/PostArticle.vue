@@ -113,5 +113,10 @@ button {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     filter: brightness(1.1);
   }
+  section {
+    border: 2px solid $color-secondary;
+    border-radius: 2em;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  }
 }
 </style>
