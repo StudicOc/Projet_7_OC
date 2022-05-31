@@ -7,7 +7,7 @@ import LoginForm from "@/views/Public-page/Login.vue";
 //********Private content*********/
 import ProfilConnect from "@/views/Authenticated/DashboardUser.vue";
 import Workplace from "@/views/Authenticated/PublicationPage.vue"; //********Display of publications and form to post a message*********/
-import Article from "@/views/Authenticated/ArticlePage.vue"; //********Manage an article with its ID*********/
+import Article from "@/views/Authenticated/ArticlePage.vue";
 
 const routes = [
   {
@@ -52,7 +52,7 @@ const routes = [
 
   {
     path: "/articles",
-    name: "Articles",
+    name: "articles",
     component: Workplace,
     meta: {
       requiresAuth: true,
