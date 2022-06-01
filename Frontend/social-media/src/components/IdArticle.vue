@@ -1,36 +1,68 @@
 <template>
-  <div class="text-center">
-    <button class="message mb-3 mt-2">
-      <strong>Publications</strong>
-    </button>
-  </div>
-  <div v-if="article">
-    <article>
-      <div class="card mb-4">
-        <p class="card-header me-auto">
-          <strong> Publié par :</strong> {{ article.userId }},
-          <strong>le </strong>
-          {{ formatDate(article.createdAt) }}
-        </p>
+  <section>
+    <div class="text-center">
+      <button class="message mb-3 mt-2 button-1">
+        <strong>Publications</strong>
+      </button>
+    </div>
+    <div>
+      <article>
+        <div class="card mb-4">
+          <p class="card-header me-auto">
+            <strong> Publié par :</strong> {{ article.userId }},
+            <strong>le </strong>
+            {{ formatDate(article.createdAt) }}
+          </p>
 
-        <div class="card-body">
-          <h1 class="card-title h6 font-weight-bolder font-italic">
-            {{ article.title }}
-          </h1>
-          <p class="card-text">{{ article.description }}</p>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  v-model="article.title"
+                />
+              </div>
+              <div class="form-group">
+                <label for="title">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  v-model="article.description"
+                />
+              </div>
+              <div
+                class="card-footer"
+                v-if="article.userId == user.userId || user.isAdmin == 1"
+              >
+                <button
+                  type="submit"
+                  class="badge badge-success"
+                  @click="updateArticle"
+                >
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </article>
-  </div>
+      </article>
+    </div>
+  </section>
 </template>
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
 import FormatDateDay from "../Service/FormatDateDay";
 import axios from "axios";
 export default {
   name: "IdArticle",
   data() {
     return {
+      user: {},
       article: {},
     };
   },
@@ -55,6 +87,12 @@ export default {
       console.log(error);
     }
   },
+
+  mounted() {
+    let token = localStorage.getItem("token");
+    let decoded = VueJwtDecode.decode(token);
+    this.user = decoded;
+  },
 };
 </script>
 
@@ -66,7 +104,7 @@ $color-tertiary: #4e5166;
   background-color: #ffd7d7;
 }
 
-button {
+.button-1 {
   padding: 0.5rem;
   border-radius: 2em;
   font-size: 14px;
