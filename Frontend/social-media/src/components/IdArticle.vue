@@ -22,11 +22,6 @@
       </div>
     </article>
   </div>
-
-  <div v-else>
-    <br />
-    <p>Please click on a Tutorial...</p>
-  </div>
 </template>
 
 <script>
@@ -37,7 +32,6 @@ export default {
   data() {
     return {
       article: {},
-      message: "",
     };
   },
   mixins: [FormatDateDay],
