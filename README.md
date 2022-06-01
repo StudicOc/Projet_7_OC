@@ -21,6 +21,15 @@ Voici les exigences émises par le comité de pilotage :
 - Le ou la chargé-e de communication Groupomania doit pouvoir modérer les interactions entre
   salariés;
 
+# Responsive design🔥
+
+Utilisation de bootstrap 4
+
+# Package Frontend 🧾
+
+- Gestion des dates au format date avec le package dayjs.
+- Si le format date n'est pas reconnu, installer via la commande : `npm install dayjs`
+
 # Lancement des services Frontend ⚙️
 
 - Frameworks Vue.js Version 3
