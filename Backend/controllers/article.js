@@ -42,6 +42,8 @@ exports.getOneArticle = (req, res, next) => {
         error: error,
       });
     });
+  //**********Condition si Admin findOne et si userId findOne ********//
+  //************************************/
 };
 
 //***************Les routes ne pourront être supprimé que par leur user ou l'admin **********//
