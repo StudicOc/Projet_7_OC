@@ -23,6 +23,18 @@
               </h1>
               <p class="card-text">{{ article.description }}</p>
             </div>
+            <div
+              class="card-footer"
+              v-if="article.userId == user.userId || user.isAdmin == 1"
+            >
+              <button
+                type="submit"
+                class="badge badge-success"
+                @click="updateArticle"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </article>
       </router-link>
@@ -31,12 +43,14 @@
 </template>
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
 import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
 export default {
   name: "AllArticle",
   data() {
     return {
+      user: {},
       articles: [],
     };
   },
@@ -68,6 +82,9 @@ export default {
   },
 
   mounted() {
+    let token = localStorage.getItem("token");
+    let decoded = VueJwtDecode.decode(token);
+    this.user = decoded;
     this.showArticles();
   },
 };
@@ -87,22 +104,5 @@ a {
 a:hover {
   color: inherit;
   text-decoration: none;
-}
-button {
-  padding: 0.5rem;
-  border-radius: 2em;
-  font-size: 14px;
-  background: linear-gradient(25deg, $color-tertiary, $color-secondary);
-  border: none;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
-  transition-property: transform;
-  transition-duration: 400ms;
-  &:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.1);
-  }
 }
 </style>
