@@ -31,7 +31,6 @@ export default {
   },
 };
 </script>
-
 <style lang="css">
 .side-bar a {
   display: block;
@@ -58,12 +57,6 @@ a:hover {
   text-decoration: none;
 }
 
-.badge {
-  color: black;
-}
-.card-footer {
-  cursor: pointer;
-}
 @media only screen and (min-width: 1050px) {
   .site {
     display: flex;
