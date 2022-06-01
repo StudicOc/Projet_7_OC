@@ -3,7 +3,7 @@
     <div class="text-center">
       <button class="message mb-2 mt-2">
         <strong>Publications</strong>
-        <p>Pour modifier votre cliquez dessus... 😉</p>
+        <p>Pour modifier votre article cliquez dessus... 😉</p>
       </button>
     </div>
     <div v-for="article of articles" :key="article._id">
