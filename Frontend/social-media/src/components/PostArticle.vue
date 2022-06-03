@@ -43,7 +43,6 @@
 </template>
 
 <script>
-//import axios from "axios";
 import ArticleDataService from "../Service/ArticleDataService";
 export default {
   name: "PostArticle",
@@ -52,7 +51,6 @@ export default {
     return {
       title: "",
       description: "",
-      //createdAt: "",
     };
   },
 
