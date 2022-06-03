@@ -187,6 +187,7 @@ export default {
     },
     deleteAccount() {
       UsersDataService.deleteUser()
+
         .then((response) => {
           this.$store.dispatch("logout").then(() => {
             this.$router.push("/");
