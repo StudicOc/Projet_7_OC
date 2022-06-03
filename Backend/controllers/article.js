@@ -51,18 +51,21 @@ exports.getOneArticle = (req, res, next) => {
 //*******Mettre à jour un didacticiel par l'identifiant dans la demande*******//
 
 exports.modifyArticle = (req, res, next) => {
-  Article.findOne({ where: { userId: req.userId } });
+  // Condition par défaut : Id post et id user obligé//
+  let whereClause = { _id: req.params.id, userId: req.userId };
+  // Condition pour un Admin  retire l'userId//
+  if (req.isAdmin > 0) delete whereClause.userId;
+  console.log(whereClause);
+
+  //Article.findOne({ where: { userId: req.userId } });
 
   const modifyObject = {
     title: req.body.title,
     description: req.body.description,
   };
-  console.log(modifyObject);
+  //console.log(modifyObject);
 
-  Article.update(
-    { ...modifyObject },
-    { where: { _id: req.params.id, userId: req.userId } }
-  )
+  Article.update({ ...modifyObject }, { where: whereClause })
     .then((affectedRows) => {
       if (affectedRows[0] > 0) {
         // Si plus d'une ligne //
@@ -76,11 +79,19 @@ exports.modifyArticle = (req, res, next) => {
 };
 
 //***************************************//
+
 exports.deleteArticle = (req, res, next) => {
-  Article.destroy({ where: { _id: req.params.id, userId: req.userId } })
-    .then((affectedRows) => {
-      //---Condition pour récupérer le premier element, par défaut un tableau est renvoyé---//
-      if (affectedRows[0] > 0) {
+  // Condition par défaut //
+  let whereClause = { _id: req.params.id, userId: req.userId };
+  // Condition pour un Admin //
+  if (req.isAdmin > 0) {
+    delete whereClause.userId;
+  }
+
+  Article.destroy({ where: whereClause })
+
+    .then((destroyedRows) => {
+      if (destroyedRows) {
         // Si plus d'une ligne //
         res.status(200).json({ message: "Objet supprimé!" });
       } else {
