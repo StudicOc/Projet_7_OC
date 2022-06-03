@@ -1,56 +1,62 @@
 <template>
   <section>
     <div class="text-center">
-      <button class="message mb-3 mt-2 button-1">
+      <button class="message mb-2 mt-2">
         <strong>Publications</strong>
+        <p>Modifier votre article ou supprimer 😉</p>
       </button>
     </div>
-    <div>
-      <article>
-        <div class="card mb-4">
-          <p class="card-header me-auto">
-            <strong> Publié par :</strong> {{ article.userId }},
-            <strong>le </strong>
-            {{ formatDate(article.createdAt) }}
-          </p>
 
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="title">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  v-model="article.title"
-                />
-              </div>
-              <div class="form-group">
-                <label for="title">Description</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  v-model="article.description"
-                />
-              </div>
-              <div
-                class="card-footer"
-                v-if="article.userId == user.userId || user.isAdmin == 1"
-              >
-                <button
-                  type="submit"
-                  class="badge badge-success"
-                  @click="updateArticle"
-                >
-                  Update
-                </button>
-              </div>
-            </form>
+    <article>
+      <div class="card mb-4">
+        <p class="card-header me-auto">
+          <strong> Publié par :</strong> {{ article.userId }},
+          <strong>le </strong>
+          {{ formatDate(article.createdAt) }}
+        </p>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                v-model="article.title"
+              />
+            </div>
+            <div class="form-group">
+              <label for="title">Description</label>
+              <textarea
+                type="text"
+                class="form-control"
+                id="title"
+                v-model="article.description"
+              />
+            </div>
+          </form>
+          <div
+            class="card-footer"
+            v-if="article.userId == user.userId || user.isAdmin == 1"
+          >
+            <button
+              type="submit"
+              class="badge badge-success"
+              @click="updateArticle"
+            >
+              Update
+            </button>
+            <button
+              type="submit"
+              class="badge badge-danger"
+              @click="deleteArticle"
+            >
+              Delete
+            </button>
           </div>
         </div>
-      </article>
-    </div>
+      </div>
+    </article>
   </section>
 </template>
 
@@ -72,6 +78,7 @@ export default {
       return this.formatDate(this.createdAt);
     },
   },
+
   async created() {
     try {
       const response = await axios.get(
@@ -86,6 +93,51 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  methods: {
+    updateArticle() {
+      const data = {
+        title: this.article.title,
+        description: this.article.description,
+      };
+      axios
+        .put(
+          "http://localhost:3000/api/article/" + this.$route.params.id,
+          data,
+
+          {
+            headers: {
+              Authorization: "Bearer, " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          response.data = this.data;
+          alert("Votre poste est modifié avec succés");
+          this.$router.push("/articles");
+        })
+        .catch((error) => {
+          console.error("Something went wrong!", error);
+        });
+    },
+
+    deleteArticle() {
+      axios
+        .delete("http://localhost:3000/api/article/" + this.$route.params.id, {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          alert("Votre poste est supprimé avec succés");
+          this.$router.push("/articles");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   mounted() {
