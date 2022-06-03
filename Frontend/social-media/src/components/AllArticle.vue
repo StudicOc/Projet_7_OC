@@ -34,6 +34,13 @@
               >
                 Update
               </button>
+              <button
+                type="submit"
+                class="badge badge-danger"
+                @click="deleteArticle"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </article>
