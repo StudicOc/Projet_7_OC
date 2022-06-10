@@ -7,16 +7,25 @@ const app = express();
 //Protection de notre BDD, envoie chiffré/
 const dotenv = require("dotenv");
 dotenv.config();
-//Protection de notre appli express//
+//Protection de notre appli express dans sa globalité//
 const helmet = require("helmet");
 app.use(helmet());
-// L'inspecteur de code n'affichera pas le framework utlisé //
+// Ne donne pas accés à l'intitulé de notre composition//
 app.disable("x-powered-by");
+// Supprime l'en-tête X-Powered-By//
+app.use(helmet.hidePoweredBy());
+//Protection des attaques XSS//
+app.use(helmet.xssFilter());
+//Atténue le reniflage de type MIME qui peut entraîner des vulnérabilités de sécurité. //
+app.use(helmet.noSniff());
+app.use(helmet());
 
 //****IMPORT DE NOTRE BDD ****/
 const dataBase = require("./models/User");
 const DDB = require("./models/Article");
+const DDB_comments = require("./models/articles_comments");
 DDB.sequelize.sync();
+
 //***********Aide à analyser la requête********** //
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
