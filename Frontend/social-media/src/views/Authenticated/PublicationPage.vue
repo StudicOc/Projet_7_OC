@@ -14,7 +14,11 @@
     </main>
     <aside class="aside">
       <p class="font-weight-bold">Groupes suggérés</p>
-      <p>Découvrez et rejoignez des groupes dont vos collègues font partie.</p>
+
+      <p>
+        Découvrez et rejoignez des groupes<br />
+        dont vos collègues font partie.
+      </p>
     </aside>
   </div>
 </template>
@@ -60,13 +64,10 @@ a:hover {
 @media only screen and (min-width: 1050px) {
   .site {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .side-bar {
     width: 180px;
-  }
-  .aside {
-    width: 310px;
   }
 }
 </style>
