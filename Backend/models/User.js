@@ -62,8 +62,8 @@ const User = sequelize.define("user", {
 });
 
 User.associate = function (models) {
-  // associations can be defined here
   models.User.hasMany(models.Article);
+  models.User.hasMany(models.Comment);
 };
 
 module.exports = User;

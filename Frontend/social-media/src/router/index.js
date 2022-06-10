@@ -41,6 +41,7 @@ const routes = [
     component: Article,
     meta: { requiresAuth: true },
   },
+
   {
     path: "/article/add",
     name: "add",

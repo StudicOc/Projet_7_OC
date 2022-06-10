@@ -1,15 +1,8 @@
 <template>
   <section>
-    <div class="text-center">
-      <button class="message mb-2 mt-2">
-        <strong>Publications</strong>
-        <p>Modifier votre article ou supprimer 😉</p>
-      </button>
-    </div>
-
-    <article>
+    <div class="container">
       <div class="card mb-4">
-        <p class="card-header me-auto">
+        <p class="card-header">
           <strong> Publié par :</strong> {{ article.userId }},
           <strong>le </strong>
           {{ formatDate(article.createdAt) }}
@@ -56,7 +49,7 @@
           </div>
         </div>
       </div>
-    </article>
+    </div>
   </section>
 </template>
 
@@ -64,6 +57,7 @@
 import VueJwtDecode from "vue-jwt-decode";
 import FormatDateDay from "../Service/FormatDateDay";
 import axios from "axios";
+
 export default {
   name: "IdArticle",
   data() {
@@ -72,6 +66,7 @@ export default {
       article: {},
     };
   },
+
   mixins: [FormatDateDay],
   computed: {
     formattedDate() {
@@ -155,15 +150,10 @@ $color-tertiary: #4e5166;
 .card-header {
   background-color: #ffd7d7;
 }
-
-.button-1 {
-  padding: 0.5rem;
-  border-radius: 2em;
-  font-size: 14px;
-  background: linear-gradient(25deg, $color-primary, $color-secondary);
+.first-button {
   border: none;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 2em;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(30deg, $color-secondary, $color-tertiary);
 }
 </style>

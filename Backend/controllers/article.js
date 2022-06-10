@@ -1,10 +1,10 @@
+//*******************************ARTICLE********************************************************//
 const Article = require("../models/Article");
-const fs = require("fs");
+const Comment = require("../models/articles_comments");
 
-//***************************************************************************************/
 //*******Création d'un article*******//
 exports.createArticle = (req, res, next) => {
-  //Nous allons renvoyer 2 paramêtres //
+  //Nous allons renvoyer 2 paramêtres pour le body //
   const title = req.body.title;
   const description = req.body.description;
 
@@ -42,8 +42,6 @@ exports.getOneArticle = (req, res, next) => {
         error: error,
       });
     });
-  //**********Condition si Admin findOne et si userId findOne ********//
-  //************************************/
 };
 
 //***************Les routes ne pourront être supprimé que par leur user ou l'admin **********//
@@ -78,8 +76,6 @@ exports.modifyArticle = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//***************************************//
-
 exports.deleteArticle = (req, res, next) => {
   // Condition par défaut //
   let whereClause = { _id: req.params.id, userId: req.userId };
@@ -99,5 +95,33 @@ exports.deleteArticle = (req, res, next) => {
       }
       //console.log(test[0]);
     })
+    .catch((error) => res.status(400).json({ error }));
+};
+
+//****************************Commentaire**************************//
+
+//***********************Gestion des commentaires*******************************/
+exports.addCommentArticle = (req, res, next) => {
+  const description = req.body.description;
+  //*********Les champs ne doivent pas être vides avant l'envoi***********//
+  if (description == null) {
+    res.status(400).json({ message: "Tableau vide" });
+    return;
+  }
+  console.log(req.body);
+  //*********Construire le corps de la requête*************//
+  const comment = Comment.build({
+    // Les données présentent dans notre modéle Comment (BDD)//
+    ArticleId: req.params.id,
+    UserId: req.userId,
+    description: req.body.description,
+  });
+  console.log(comment);
+  //********Enregistrer le nouveau commentaire*************//
+  comment
+    .save()
+    .then(() =>
+      res.status(201).json({ comment, message: "Commentaire ajouté" })
+    )
     .catch((error) => res.status(400).json({ error }));
 };

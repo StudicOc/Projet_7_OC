@@ -1,7 +1,7 @@
 // Include ORM Sequelize module.
 const { Sequelize } = require("sequelize");
 
-//const User = require("../models/User");
+const Comment = require("../models/articles_comments");
 
 // Import sequelize object,
 const sequelize = require("../config.db/db");
@@ -18,7 +18,7 @@ const Article = sequelize.define("article", {
   },
   //**********Identifiant de l'envoyeur, l'utilisateur qui générera le post **********/
   userId: {
-    allowNull: false,
+    // allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Users",
@@ -47,11 +47,11 @@ const Article = sequelize.define("article", {
 });
 
 Article.associate = function (models) {
-  // associations can be defined here
   models.Article.belongsTo(models.User, {
-    foreignKey: {
-      allowNull: false,
-    },
+    foreignKey: "userId",
+    onUpdate: "NOT ACTION",
+    onDelete: "NOT ACTION",
   });
+  models.Article.hasMany(models.Comment);
 };
 module.exports = Article;

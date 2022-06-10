@@ -4,7 +4,7 @@
   <!-- Header -->
   <div id="app">
     <div class="top-bar">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="custom-nav navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Groupomania</a>
         <button
           class="navbar-toggler"
@@ -90,7 +90,6 @@ html {
 }
 
 nav {
-  //background-color: $color-tertiary;
   color: black;
   a {
     font-size: 15px;

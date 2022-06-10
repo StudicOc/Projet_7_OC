@@ -2,7 +2,7 @@
   <section>
     <div class="container custom-container pb-3">
       <h1 class="h4 font-weight-bold text-center mt-3 pt-3">
-        Poster une publication
+        Poster un article
       </h1>
       <p class="font-weight-bold text-center">
         Nous vous rappelons que notre modérateur pourra supprimer votre poste si
@@ -26,14 +26,13 @@
             <textarea
               class="form-control"
               name="message"
-              id="message"
               v-model="description"
               rows="1"
             ></textarea>
           </div>
           <div class="form-group">
             <button type="submit" value="Submit" @click.prevent="submitArticle">
-              Créer une publication
+              Envoyer mon article
             </button>
           </div>
         </form>
@@ -43,7 +42,7 @@
 </template>
 
 <script>
-import ArticleDataService from "../Service/ArticleDataService";
+import axios from "axios";
 export default {
   name: "PostArticle",
 
@@ -64,8 +63,13 @@ export default {
         title: this.title,
         description: this.description,
       };
-      ArticleDataService.postArticle(data)
 
+      axios
+        .post("http://localhost:3000/api/article/add", data, {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
         .then((response) => {
           console.log(response.data);
           alert("Message posté");
@@ -84,6 +88,12 @@ export default {
 $color-primary: #fd2d01;
 $color-secondary: #ffd7d7;
 
+section {
+  border: 2px solid $color-secondary;
+  border-radius: 2em;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .card-header {
   background-color: #ffd7d7;
 }
@@ -97,7 +107,7 @@ a:hover {
 }
 button {
   padding: 0.5rem;
-  border-radius: 2em;
+  border-radius: 6em;
   font-size: 14px;
   background: linear-gradient(25deg, $color-primary, $color-secondary);
   border: none;
@@ -109,12 +119,12 @@ button {
   &:hover {
     transform: scale(1.15);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.1);
   }
-  section {
-    border: 2px solid $color-secondary;
-    border-radius: 2em;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
-  }
+}
+
+input,
+textarea {
+  border-radius: 6em;
+  background-color: rgba(0, 0, 0, 0.03);
 }
 </style>
