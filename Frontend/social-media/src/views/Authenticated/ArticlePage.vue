@@ -4,7 +4,7 @@
       <a href="#">Fil d'actualité</a>
       <a href="#">Messages</a>
       <a href="#">Réunions</a>
-      <a href="#">Évènement </a>
+      <a href="#"> <font-awesome-icon icon="coffee" />Évènement </a>
       <a href="#">Groupes</a>
       <a href="#">Amis</a>
     </nav>
