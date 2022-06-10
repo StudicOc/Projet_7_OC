@@ -7,13 +7,19 @@
       class="d-flex flex-column justify-content-center align-items-center mt-5"
     >
       <div class="form-group col-lg-5 pt-5">
-        <input type="text" placeholder="Email" v-model="email" />
+        <input
+          type="text"
+          placeholder="Email"
+          v-model="email"
+          aria-label="Saisir votre mail"
+        />
       </div>
       <div class="form-group col-lg-5 pt-5">
         <input
           type="password"
           placeholder="Mot de passe"
           v-model="password_key"
+          aria-label="Saisir votre mot de passe"
         />
       </div>
 
@@ -24,11 +30,17 @@
       </div>
     </form>
   </div>
+
+  <BrandSocialMedia />
 </template>
 
 <script>
+import BrandSocialMedia from "../../components/BrandSocialMedia.vue";
 export default {
   name: "FormLogin",
+  components: {
+    BrandSocialMedia,
+  },
   data() {
     return {
       email: "",
