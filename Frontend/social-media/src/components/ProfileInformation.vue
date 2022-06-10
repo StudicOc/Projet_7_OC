@@ -28,7 +28,7 @@
                   <!--DEBUT DU FORMULAIRE-->
                   <!--Le formulaire doit être capable de modifier le mail affiché de l'utilisateur-->
                   <p class="font-weight-bold">
-                    Besoin de modifier votre adresse e-mail ?
+                    Besoin de mettre vos données à jours ? c'est ici.
                   </p>
                   <form>
                     <div class="form-group">
@@ -124,6 +124,7 @@ export default {
       msg: [],
     };
   },
+
   watch: {
     "user.firstname"(newVal) {
       this.validateEmail(newVal);
@@ -199,14 +200,13 @@ export default {
         });
     },
   },
-
   mounted() {
     axios
       .get("http://localhost:3000/api/profil/", {
-        headers: {
-          Authorization: "Bearer, " + localStorage.getItem("token"),
-        },
+        headers: { Authorization: "Bearer, " + localStorage.getItem("token") },
       })
+
+      //UsersDataService.getUser()
       .then((response) => {
         let token = localStorage.getItem("token");
         let decoded = VueJwtDecode.decode(token);
