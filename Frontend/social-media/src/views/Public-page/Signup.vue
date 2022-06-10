@@ -52,12 +52,17 @@
       </div>
     </form>
   </div>
+  <BrandSocialMedia />
 </template>
 
 <script>
+import BrandSocialMedia from "../../components/BrandSocialMedia.vue";
 import axios from "axios";
 export default {
   name: "FormSignup",
+  components: {
+    BrandSocialMedia,
+  },
   data() {
     return {
       firstname: "",
