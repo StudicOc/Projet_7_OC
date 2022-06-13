@@ -1,6 +1,6 @@
 //*******************************ARTICLE********************************************************//
 const Article = require("../models/Article");
-const Comment = require("../models/articles_comments");
+const Comment = require("../models/Comment");
 
 //*******Création d'un article*******//
 exports.createArticle = (req, res, next) => {
