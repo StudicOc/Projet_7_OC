@@ -1,8 +1,6 @@
 // Include ORM Sequelize module.
 const { Sequelize } = require("sequelize");
 
-const Comment = require("../models/articles_comments");
-
 // Import sequelize object,
 const sequelize = require("../config.db/db");
 //*** Définition du modele User de MYSQL Workbench***//
@@ -18,7 +16,7 @@ const Article = sequelize.define("article", {
   },
   //**********Identifiant de l'envoyeur, l'utilisateur qui générera le post **********/
   userId: {
-    // allowNull: false,
+    allowNull: false,
     type: Sequelize.INTEGER,
     references: {
       model: "Users",
