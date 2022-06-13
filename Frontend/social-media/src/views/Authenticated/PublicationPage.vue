@@ -12,13 +12,22 @@
       <PostPublication />
       <AllArticle />
     </main>
-    <aside class="aside">
-      <p class="font-weight-bold">Groupes suggérés</p>
-
-      <p>
-        Découvrez et rejoignez des groupes<br />
-        dont vos collègues font partie.
-      </p>
+    <aside>
+      <div class="card">
+        <div class="card-header text-uppercase font-weight-bold">Évènement</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>15 juin</strong><br />Cocktail de fin d'année
+          </li>
+          <li class="list-group-item">
+            <strong>25 juin</strong><br />Réunion de fin d'année
+          </li>
+          <li class="list-group-item">
+            <strong>26 juin</strong><br />Présentation du réseau social
+            Groupomania
+          </li>
+        </ul>
+      </div>
     </aside>
   </div>
 </template>
@@ -52,6 +61,7 @@ export default {
   background: #ffd7d7;
   font-weight: bold;
 }
+
 a {
   color: inherit;
   text-decoration: none;
@@ -65,9 +75,6 @@ a:hover {
   .site {
     display: flex;
     justify-content: space-around;
-  }
-  .side-bar {
-    width: 180px;
   }
 }
 </style>
