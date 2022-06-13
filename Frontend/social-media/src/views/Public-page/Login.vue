@@ -48,7 +48,7 @@ export default {
     };
   },
   methods: {
-    //*******TEST Authentification dans Vue avec Vuex *******//
+    //*******Authentification dans Vue avec Vuex *******//
     submitLogin() {
       let email = this.email;
       let password_key = this.password_key;
