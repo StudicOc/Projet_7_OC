@@ -1,6 +1,5 @@
 // Include Sequelize module.
 const { Sequelize } = require("sequelize");
-const Article = require("../models/Article");
 
 // Import sequelize object,
 
