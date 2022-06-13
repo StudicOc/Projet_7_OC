@@ -4,7 +4,6 @@ export default {
   methods: {
     formatDate(dateString) {
       const date = dayjs(dateString);
-      // Then specify how you want your dates to be formatted
       return date.format("DD/MM/YYYY à HH:mm");
     },
   },
