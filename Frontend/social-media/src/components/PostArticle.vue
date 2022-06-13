@@ -76,7 +76,7 @@ export default {
           window.location.reload();
         })
         .catch((error) => {
-          alert("Un utilisateur est déjà inscrit avec cette mail");
+          alert("Votre article n'a pas pu être posté");
           console.log(error);
         });
     },
