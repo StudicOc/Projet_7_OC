@@ -37,7 +37,7 @@
                         type="text"
                         class="form-control"
                         v-model="user.firstname"
-                        aria-label="First name"
+                        aria-label="Prénom"
                       />
                       <span v-if="msg.lastname">{{ msg.firstname }}</span>
                     </div>
@@ -47,7 +47,7 @@
                         type="text"
                         class="form-control"
                         v-model="user.lastname"
-                        aria-label="Last name"
+                        aria-label="Nom"
                       />
                       <span v-if="msg.lastname">{{ msg.lastname }}</span>
                     </div>
@@ -111,7 +111,6 @@
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
-import UsersDataService from "../Service/UsersDataService";
 import axios from "axios";
 export default {
   name: "ProfilConnect",
@@ -163,31 +162,41 @@ export default {
         this.msg["email"] = "Mail valide";
       } else {
         this.msg["email"] = "Le format mail n'est pas respecté";
+        this.msg["email"] = "Mail valide";
       }
     },
 
     updateProfil() {
-      let data = {
+      const data = {
         firstname: this.user.firstname,
         lastname: this.user.lastname,
         email: this.user.email,
       };
 
-      this.$store.dispatch("logout");
-      UsersDataService.putUser(data)
+      axios
+        .put("http://localhost:3000/api/profil", data, {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
+
         .then((response) => {
-          this.data = response.data;
-          console.log("Data: ", response.data);
+          this.$store.dispatch("logout");
+          response.data = this.data;
+          alert("Votre profil est modifié avec succés");
           this.$router.push("/login");
-          alert("Modification prise en compte, veuillez-vous reconnecter!");
-          //refresh token
         })
         .catch((error) => {
           console.error("Something went wrong!", error);
         });
     },
     deleteAccount() {
-      UsersDataService.deleteUser()
+      axios
+        .delete("http://localhost:3000/api/profil", {
+          headers: {
+            Authorization: "Bearer, " + localStorage.getItem("token"),
+          },
+        })
 
         .then((response) => {
           this.$store.dispatch("logout").then(() => {
@@ -202,11 +211,10 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/api/profil/", {
+      .get("http://localhost:3000/api/profil", {
         headers: { Authorization: "Bearer, " + localStorage.getItem("token") },
       })
 
-      //UsersDataService.getUser()
       .then((response) => {
         let token = localStorage.getItem("token");
         let decoded = VueJwtDecode.decode(token);
@@ -224,6 +232,7 @@ export default {
 $color-secondary: #ffd7d7;
 .container {
   background-color: $color-secondary;
+  border-radius: 2rem;
 }
 input {
   outline: none;
