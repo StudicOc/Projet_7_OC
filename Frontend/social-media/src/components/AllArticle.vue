@@ -23,7 +23,6 @@
       <article class="mt-5 p-3">
         <div class="card mb-4">
           <p class="card-header me-auto">
-            <!-- Attribution dynamique de la valeur d'une variable-->
             <strong> Publié par :</strong> {{ article.userId }},
             <strong>le </strong>
             {{ formatDate(article.createdAt) }}
@@ -55,8 +54,6 @@
             </div>
 
             <!-----------------------------Delete article------------------------->
-            <!--Le button recevra notre element personnalisé et qui fera référence à notre boucle for qui est son parent
-             -->
 
             <div
               class="btn-group"
@@ -72,9 +69,11 @@
               </button>
             </div>
           </div>
+          <!-----------------------------Post comment------------------------->
           <div class="p-2">
             <Comment :articleId="article._id" />
           </div>
+          <!-----------------------------GET all comment------------------------->
         </div>
       </article>
     </div>
@@ -85,7 +84,7 @@
 import VueJwtDecode from "vue-jwt-decode";
 import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
-import Comment from "./CommentArticle.vue";
+import Comment from "./PostCommentArticle.vue";
 
 export default {
   name: "AllArticle",
