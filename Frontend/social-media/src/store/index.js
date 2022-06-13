@@ -77,4 +77,4 @@ export default createStore({
       });
     },
   },
-}); //Fin de la balise createStore //
+});
