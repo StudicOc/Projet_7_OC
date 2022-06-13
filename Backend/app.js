@@ -23,8 +23,15 @@ app.use(helmet());
 //****IMPORT DE NOTRE BDD ****/
 const dataBase = require("./models/User");
 const DDB = require("./models/Article");
-const DDB_comments = require("./models/articles_comments");
-DDB.sequelize.sync();
+const DDB_comments = require("./models/Comment");
+DDB.sequelize
+  .sync()
+  .then(function () {
+    console.log("Les models sont synchronisés");
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 //***********Aide à analyser la requête********** //
 app.use(express.urlencoded({ extended: true }));
