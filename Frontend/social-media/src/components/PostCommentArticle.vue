@@ -11,7 +11,7 @@
     <div class="form-group">
       <button
         type="button"
-        class="btn btn-outline-success"
+        class="btn btn-dark"
         @click="postComment(articleId)"
       >
         Ajouter

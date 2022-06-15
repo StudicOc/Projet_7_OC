@@ -44,12 +44,13 @@ const Article = sequelize.define("article", {
   },
 });
 
-Article.associate = function (models) {
-  models.Article.belongsTo(models.User, {
+Article.associate = function () {
+  Article.belongsTo(User, {
     foreignKey: "userId",
     onUpdate: "NOT ACTION",
     onDelete: "NOT ACTION",
   });
-  models.Article.hasMany(models.Comment);
+  Article.hasMany(Comment);
 };
+
 module.exports = Article;

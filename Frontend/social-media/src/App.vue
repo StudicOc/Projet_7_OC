@@ -4,7 +4,7 @@
   <!-- Header -->
   <div id="app">
     <div class="top-bar">
-      <nav class="custom-nav navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="custom-nav navbar navbar-expand-lg navbar-light bg">
         <a class="navbar-brand" href="#">Groupomania</a>
         <button
           class="navbar-toggler"
@@ -19,25 +19,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="navbar-nav" v-if="isLoggedIn">
-            <!--Lien de de notre nav relié au routeur-->
-
             <router-link v-if="isLoggedIn" to="/profil">
               <font-awesome-icon icon="user" /> Compte
             </router-link>
 
-            <!--<router-link v-if="isLoggedIn" to="/article/add"
-                >Poster un article</router-link
-              -->
-
             <router-link v-if="isLoggedIn" to="/articles"
               ><font-awesome-icon icon="home" />Workplace</router-link
             >
-            <a href="#" v-if="isLoggedIn" class="nav-link" @click="logout"
+            <a href="#" v-if="isLoggedIn" @click="logout"
               ><font-awesome-icon icon="sign-out-alt" />Logout</a
             >
+
+            <form class="form-inline">
+              <input
+                class="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button
+                class="btn btn-outline-success my-2 my-sm-0"
+                type="submit"
+              >
+                Search
+              </button>
+            </form>
           </div>
           <span v-else>
-            <!--Lien de de notre nav relié au routeur-->
             <div class="navbar-nav">
               <router-link to="/">FAQ</router-link>
               <router-link to="/signup">Inscription</router-link>
@@ -96,12 +104,18 @@ nav {
     text-decoration: none;
     padding: 10px;
     font-size: 14px;
-    color: inherit;
+    color: black;
     font-weight: bold;
   }
 }
 
 .svg-inline--fa {
   margin-right: 2px;
+}
+
+@media only screen and (min-width: 1050px) {
+  .bg {
+    background: $color-secondary;
+  }
 }
 </style>

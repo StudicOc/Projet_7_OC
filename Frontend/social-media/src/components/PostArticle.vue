@@ -19,6 +19,7 @@
               name="title"
               id="title"
               v-model="title"
+              aria-label="Ajouter un titre d'au moins 10 caractère"
             />
           </div>
           <div class="form-group">
@@ -28,6 +29,7 @@
               name="message"
               v-model="description"
               rows="1"
+              aria-label="Ajouter une description"
             ></textarea>
           </div>
           <div class="form-group">

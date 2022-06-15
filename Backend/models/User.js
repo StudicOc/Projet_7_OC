@@ -60,9 +60,9 @@ const User = sequelize.define("user", {
   },
 });
 
-User.associate = function (models) {
-  models.User.hasMany(models.Article);
-  models.User.hasMany(models.Comment);
+User.associate = function () {
+  User.hasMany(Article);
+  User.hasMany(Comment);
 };
 
 module.exports = User;

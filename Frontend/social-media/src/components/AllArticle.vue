@@ -23,8 +23,8 @@
       <article class="mt-5 p-3">
         <div class="card mb-4">
           <p class="card-header me-auto">
-            <strong> Publié par :</strong> {{ article.userId }},
-            <strong>le </strong>
+            <strong> Publié par :</strong> {{ article.userId }} <br /><strong>
+            </strong>
             {{ formatDate(article.createdAt) }}
           </p>
 
@@ -60,13 +60,15 @@
               role="group"
               aria-label="Supprimer un article"
             >
-              <button
-                type="submit"
-                class="badge badge-danger"
-                @click="removeItem(article._id)"
-              >
-                Delete
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  class="badge badge-danger style-btn"
+                  @click="removeItem(article._id)"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
           <!-----------------------------Post comment------------------------->
@@ -178,10 +180,10 @@ a:hover {
   color: inherit;
   text-decoration: none;
 }
-.badge-info {
-  color: inherit;
-}
 
+.style-btn {
+  margin-left: 0.5em;
+}
 .card-footer {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }

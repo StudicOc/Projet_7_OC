@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = require("../config.db/db");
 
-const Comment = sequelize.define("comment", {
+const Comment = sequelize.define("Comment", {
   idcomment: {
     type: Sequelize.INTEGER,
 
@@ -47,16 +47,17 @@ const Comment = sequelize.define("comment", {
   },
 });
 
-Comment.associate = function (models) {
-  models.Comment.belongsTo(models.User, {
-    foreignKey: "UserId",
-    onUpdate: "NOT ACTION",
-    onDelete: "CASCADE",
-  });
-  models.Comment.belongsTo(models.Article, {
+Comment.associate = function () {
+  Comment.belongsTo(Article, {
     foreignKey: "ArticleId",
     onUpdate: "NOT ACTION",
     onDelete: "CASCADE",
   });
+  Comment.belongsTo(User, {
+    foreignKey: "UserId",
+    onUpdate: "NOT ACTION",
+    onDelete: "CASCADE",
+  });
 };
+
 module.exports = Comment;
