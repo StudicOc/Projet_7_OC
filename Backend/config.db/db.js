@@ -19,12 +19,16 @@ const sequelize = new Sequelize(
   }
 );
 
-//*****Tester notre connexion à notre BDD lors du démarrage du serveur  *****/
+//*****Tester notre connexion à notre BDD lors du démarrage du serveur *********//
 try {
   sequelize.authenticate();
   console.log("Connecté à la base de données MySQL!");
 } catch (error) {
   console.error("Impossible de se connecter, erreur suivante :", error);
 }
+
+//********************Synchronisation des tables************************* */
+sequelize.sync();
+console.log("All models were synchronized successfully.");
 
 module.exports = sequelize;
