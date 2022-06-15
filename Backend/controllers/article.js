@@ -1,6 +1,7 @@
 //*******************************ARTICLE********************************************************//
 const Article = require("../models/Article");
 const Comment = require("../models/Comment");
+const User = require("../models/User");
 
 //*******Création d'un article*******//
 exports.createArticle = (req, res, next) => {
@@ -8,13 +9,13 @@ exports.createArticle = (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
 
-  // Fields must not be empty before sending //
+  //*******Les champs ne doivent pas être vides avant l'envoi****//
   if (title == null || description == null) {
     res.status(400).json({ message: "Tableau vide" });
     return;
   }
   console.log(req.body);
-  //***Build the request body****/
+  //*******Contruction de corp de la request************//
   const article = Article.build({
     title: req.body.title,
     description: req.body.description,
@@ -23,17 +24,28 @@ exports.createArticle = (req, res, next) => {
   });
   console.log(article);
 
-  //***Save new article***//
+  //***Enregistrer un nouvelle article***//
   article
     .save()
     .then(() => res.status(201).json({ article }))
     .catch((error) => res.status(400).json({ error }));
 };
 
-// *******Trouver un seul article par son identifiant*******//
+//*******Trouver un seul article par son identifiant*******//
 
 exports.getOneArticle = (req, res, next) => {
-  Article.findOne({ where: { _id: req.params.id } })
+  Article.findOne(
+    { where: { _id: req.params.id } },
+
+    {
+      include: [
+        {
+          model: User,
+          attributes: ["firstname", "lastname"],
+        },
+      ],
+    }
+  )
     .then((article) => {
       res.status(200).json(article);
     })
@@ -55,13 +67,10 @@ exports.modifyArticle = (req, res, next) => {
   if (req.isAdmin > 0) delete whereClause.userId;
   console.log(whereClause);
 
-  //Article.findOne({ where: { userId: req.userId } });
-
   const modifyObject = {
     title: req.body.title,
     description: req.body.description,
   };
-  //console.log(modifyObject);
 
   Article.update({ ...modifyObject }, { where: whereClause })
     .then((affectedRows) => {
@@ -98,9 +107,9 @@ exports.deleteArticle = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//****************************Commentaire**************************//
-
 //***********************Gestion des commentaires*******************************/
+
+//**************************Ajouter un commentaire******************************** */
 exports.addCommentArticle = (req, res, next) => {
   const description = req.body.description;
   //*********Les champs ne doivent pas être vides avant l'envoi***********//
