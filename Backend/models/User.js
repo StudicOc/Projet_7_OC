@@ -1,9 +1,8 @@
-// Include Sequelize module.
 const { Sequelize } = require("sequelize");
-
-// Import sequelize object,
-
 const sequelize = require("../config.db/db");
+
+const Article = require("./Article");
+const Comment = require("./Comment");
 
 const User = sequelize.define("user", {
   userId: {
@@ -60,9 +59,18 @@ const User = sequelize.define("user", {
   },
 });
 
-User.associate = function () {
-  User.hasMany(Article);
-  User.hasMany(Comment);
-};
+User.hasMany(Article, { foreignKey: "userId" });
+Article.belongsTo(User, {
+  foreignKey: "userId",
+  onUpdate: "NOT ACTION",
+  onDelete: "NOT ACTION",
+});
+
+User.hasMany(Comment, { foreignKey: "UserId" });
+Comment.belongsTo(User, {
+  foreignKey: "UserId",
+  onUpdate: "NOT ACTION",
+  onDelete: "CASCADE",
+});
 
 module.exports = User;
