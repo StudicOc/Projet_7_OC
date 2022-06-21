@@ -73,6 +73,7 @@ export default {
           },
         })
         .then((response) => {
+          this.data = response.data;
           console.log(response.data);
           alert("Message posté");
           window.location.reload();
