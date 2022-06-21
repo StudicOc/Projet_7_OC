@@ -27,7 +27,7 @@ try {
   console.error("Impossible de se connecter, erreur suivante :", error);
 }
 
-//********************Synchronisation des tables************************* */
+//********************Synchronisation des tables******************************/
 sequelize.sync();
 console.log("All models were synchronized successfully.");
 
