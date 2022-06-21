@@ -1,7 +1,6 @@
 //*******************************ARTICLE********************************************************//
 const Article = require("../models/Article");
 const Comment = require("../models/Comment");
-const User = require("../models/User");
 
 //*******Création d'un article*******//
 exports.createArticle = (req, res, next) => {
@@ -34,18 +33,7 @@ exports.createArticle = (req, res, next) => {
 //*******Trouver un seul article par son identifiant*******//
 
 exports.getOneArticle = (req, res, next) => {
-  Article.findOne(
-    { where: { _id: req.params.id } },
-
-    {
-      include: [
-        {
-          model: User,
-          attributes: ["firstname", "lastname"],
-        },
-      ],
-    }
-  )
+  Article.findOne({ where: { _id: req.params.id } })
     .then((article) => {
       res.status(200).json(article);
     })
@@ -132,5 +120,26 @@ exports.addCommentArticle = (req, res, next) => {
     .then(() =>
       res.status(201).json({ comment, message: "Commentaire ajouté" })
     )
+    .catch((error) => res.status(400).json({ error }));
+};
+
+exports.deleteComment = (req, res, next) => {
+  let whereClause = { idcomment: req.params.id, userId: req.userId };
+  // Condition pour un Admin //
+  if (req.isAdmin > 0) {
+    delete whereClause.userId;
+  }
+
+  Comment.destroy({ where: whereClause })
+
+    .then((destroyedRows) => {
+      if (destroyedRows) {
+        // Si plus d'une ligne //
+        res.status(200).json({ message: "Objet supprimé!" });
+      } else {
+        res.status(400).json({ message: " Object non supprimé!" });
+      }
+      //console.log(test[0]);
+    })
     .catch((error) => res.status(400).json({ error }));
 };
