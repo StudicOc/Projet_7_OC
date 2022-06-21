@@ -1,19 +1,37 @@
-const db = require("../config.db/db");
+const Article = require("../models/Article");
+const User = require("../models/User");
+const Comment = require("../models/Comment");
 
-//*******************Obtenez tous les articles avec des commentaires****************** */
-exports.getAllArticle = async (req, res) => {
+exports.getAllArticles = async (req, res) => {
   try {
-    const articleComment = await db.query(
-      "SELECT * FROM articles left join comments on comments.ArticleId = articles._id",
-      (error, results, fields) => {
-        if (error) {
-          res.json({ error });
-        } else {
-          res.status(200).json({ results, articleComment });
-        }
-      }
-    );
+    await Article.findAll({
+      order: [["createdAt", "DESC"]],
+      group: ["_id"],
+
+      include: [
+        {
+          model: User,
+          attributes: ["userId", "firstname", "lastname"],
+        },
+
+        {
+          model: Comment,
+          separate: true,
+          required: false,
+          include: [
+            { model: User, attributes: ["userId", "firstname", "lastname"] },
+          ],
+        },
+      ],
+    })
+      .then((articles) => {
+        res.status(200).json(articles);
+      })
+      .catch((error) => res.status(400).json({ error }));
   } catch (error) {
-    res.status(500).json({ error });
+    console.error(
+      "Impossible de recupérer les articles avec les commentaires:",
+      error
+    );
   }
 };
