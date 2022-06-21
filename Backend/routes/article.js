@@ -18,8 +18,11 @@ router.put("/:id", auth, articleCtrl.modifyArticle);
 //*******Supprimer l'article par son id **********//
 router.delete("/:id", auth, articleCtrl.deleteArticle);
 
-//******************************Commentaire ************/
+//****************************** Gestion des commentaires *************//
 
+//------------Ajouter un commentaire----------//
 router.post("/:id/comment", auth, articleCtrl.addCommentArticle);
 
+//*******Supprimer un commentaire par son id **********//
+router.delete("/:id/comment", auth, articleCtrl.deleteComment);
 module.exports = router;
