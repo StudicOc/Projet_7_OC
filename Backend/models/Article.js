@@ -1,9 +1,8 @@
-// Include ORM Sequelize module.
 const { Sequelize } = require("sequelize");
-
-// Import sequelize object,
 const sequelize = require("../config.db/db");
-//*** Définition du modele User de MYSQL Workbench***//
+
+const Comment = require("./Comment");
+
 const Article = sequelize.define("article", {
   _id: {
     type: Sequelize.INTEGER,
@@ -14,15 +13,9 @@ const Article = sequelize.define("article", {
 
     primaryKey: true,
   },
-  //**********Identifiant de l'envoyeur, l'utilisateur qui générera le post **********/
-  userId: {
-    allowNull: false,
-    type: Sequelize.INTEGER,
-    references: {
-      model: "Users",
-      key: "userId",
-    },
-  },
+
+  userId: { allowNull: false, type: Sequelize.INTEGER },
+
   title: {
     type: Sequelize.STRING(80),
     allowNull: false,
@@ -44,13 +37,11 @@ const Article = sequelize.define("article", {
   },
 });
 
-Article.associate = function () {
-  Article.belongsTo(User, {
-    foreignKey: "userId",
-    onUpdate: "NOT ACTION",
-    onDelete: "NOT ACTION",
-  });
-  Article.hasMany(Comment);
-};
+Article.hasMany(Comment, { foreignKey: "ArticleId" });
+Comment.belongsTo(Article, {
+  foreignKey: "ArticleId",
+  onUpdate: "NOT ACTION",
+  onDelete: "CASCADE",
+});
 
 module.exports = Article;
