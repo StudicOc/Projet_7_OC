@@ -9,10 +9,6 @@
       </button>
     </div>
 
-    <p>
-      Nombre de publications 😉: <strong>{{ articles.length }}</strong>
-    </p>
-
     <!-----------------Affichage de notre base de donnée pour les articles ---->
     <div
       id="content-articles"
@@ -22,9 +18,10 @@
     >
       <article class="mt-5 p-3">
         <div class="card mb-4">
-          <p class="card-header me-auto">
-            <strong> Publié par :</strong> {{ article.userId }} <br /><strong>
-            </strong>
+          <p class="card-header">
+            <strong> Publié par :</strong> {{ article.user.firstname }}
+            {{ article.user.lastname }}<br />
+            <strong>le </strong>
             {{ formatDate(article.createdAt) }}
           </p>
 
@@ -55,27 +52,46 @@
 
             <!-----------------------------Delete article------------------------->
 
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Supprimer un article"
-            >
-              <div>
-                <button
-                  type="submit"
-                  class="badge badge-danger style-btn"
-                  @click="removeItem(article._id)"
-                >
-                  Delete
-                </button>
-              </div>
+            <div class="btn-group">
+              <button
+                type="submit"
+                class="badge badge-danger style-btn"
+                aria-label="Supprimer un article"
+                @click="removeItem(article._id)"
+              >
+                Delete
+              </button>
             </div>
           </div>
-          <!-----------------------------Post comment------------------------->
+          <!---------------------------- -Post comment------------------------->
           <div class="p-2">
             <Comment :articleId="article._id" />
           </div>
-          <!-----------------------------GET all comment------------------------->
+
+          <!----------------------------Affichage des commentaires------------------------->
+          <div class="p-2">
+            <div
+              v-show="displayComment"
+              v-for="comment of article.Comments"
+              :key="comment.idcomment"
+            >
+              <CommentCompo :comment="comment" />
+            </div>
+
+            <div>
+              <button
+                class="btn btn-info"
+                @click="displayComment = !displayComment"
+              >
+                Cliquer pour afficher ou masquer les commentaires
+              </button>
+            </div>
+            ><!--Nous passons la condition de vrai à false-->
+
+            <!---Condition pour compter le nombre TT de com, si <1 afficher button "affichercom" (faire apparaître les comms)-->
+
+            <!--Fin de notre condition pour afficher les commentaires-->
+          </div>
         </div>
       </article>
     </div>
@@ -87,6 +103,7 @@ import VueJwtDecode from "vue-jwt-decode";
 import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
 import Comment from "./PostCommentArticle.vue";
+import CommentCompo from "./CommentCompo.vue";
 
 export default {
   name: "AllArticle",
@@ -94,16 +111,19 @@ export default {
     return {
       user: {},
       articles: [],
+      comments: [],
+      displayComment: true,
     };
-  },
-  components: {
-    Comment,
   },
   mixins: [FormatDateDay],
   computed: {
     formattedDate() {
       return this.formatDate(this.createdAt);
     },
+  },
+  components: {
+    Comment,
+    CommentCompo,
   },
 
   methods: {
