@@ -1,7 +1,4 @@
-<!-- ./src/App.vue -->
-
 <template>
-  <!-- Header -->
   <div id="app">
     <div class="top-bar">
       <nav class="custom-nav navbar navbar-expand-lg navbar-light bg">
