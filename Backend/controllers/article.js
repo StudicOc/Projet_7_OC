@@ -1,8 +1,8 @@
 //*******************************ARTICLE********************************************************//
+
 const Article = require("../models/Article");
 const Comment = require("../models/Comment");
 
-//*******Création d'un article*******//
 exports.createArticle = (req, res, next) => {
   //Nous allons renvoyer 2 paramêtres pour le body //
   const title = req.body.title;
@@ -30,8 +30,6 @@ exports.createArticle = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//*******Trouver un seul article par son identifiant*******//
-
 exports.getOneArticle = (req, res, next) => {
   Article.findOne({ where: { _id: req.params.id } })
     .then((article) => {
@@ -43,10 +41,6 @@ exports.getOneArticle = (req, res, next) => {
       });
     });
 };
-
-//***************Les routes ne pourront être supprimé que par leur user ou l'admin **********//
-
-//*******Mettre à jour un didacticiel par l'identifiant dans la demande*******//
 
 exports.modifyArticle = (req, res, next) => {
   // Condition par défaut : Id post et id user obligé//
@@ -74,9 +68,8 @@ exports.modifyArticle = (req, res, next) => {
 };
 
 exports.deleteArticle = (req, res, next) => {
-  // Condition par défaut //
   let whereClause = { _id: req.params.id, userId: req.userId };
-  // Condition pour un Admin //
+
   if (req.isAdmin > 0) {
     delete whereClause.userId;
   }
@@ -85,19 +78,16 @@ exports.deleteArticle = (req, res, next) => {
 
     .then((destroyedRows) => {
       if (destroyedRows) {
-        // Si plus d'une ligne //
         res.status(200).json({ message: "Objet supprimé!" });
       } else {
         res.status(400).json({ message: " Object non supprimé!" });
       }
-      //console.log(test[0]);
     })
     .catch((error) => res.status(400).json({ error }));
 };
 
-//***********************Gestion des commentaires*******************************/
+//***********************Gestion des commentaires*******************************//
 
-//**************************Ajouter un commentaire******************************** */
 exports.addCommentArticle = (req, res, next) => {
   const description = req.body.description;
   //*********Les champs ne doivent pas être vides avant l'envoi***********//
@@ -125,7 +115,7 @@ exports.addCommentArticle = (req, res, next) => {
 
 exports.deleteComment = (req, res, next) => {
   let whereClause = { idcomment: req.params.id, userId: req.userId };
-  // Condition pour un Admin //
+
   if (req.isAdmin > 0) {
     delete whereClause.userId;
   }
@@ -134,12 +124,10 @@ exports.deleteComment = (req, res, next) => {
 
     .then((destroyedRows) => {
       if (destroyedRows) {
-        // Si plus d'une ligne //
         res.status(200).json({ message: "Objet supprimé!" });
       } else {
         res.status(400).json({ message: " Object non supprimé!" });
       }
-      //console.log(test[0]);
     })
     .catch((error) => res.status(400).json({ error }));
 };
