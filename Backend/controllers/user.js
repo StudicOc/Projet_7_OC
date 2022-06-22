@@ -1,4 +1,4 @@
-//*************************Chaque requête est testée avec Postman***********************/
+//*************************Chaque requête est testée avec Postman***********************//
 
 //*********Sécurisation des transferts de données**********//
 const jwt = require("jsonwebtoken");
@@ -34,10 +34,7 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//*******Connexion de notre user *******/
 exports.login = (req, res, next) => {
-  // --Vérification de l'utilisateur depuis notre BDD--//
-
   User.findOne({ where: { email: req.body.email } })
 
     .then((user) => {
@@ -77,8 +74,6 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
-
-// -- Accéder au contenu de l'utilisateur enregistré --//
 
 exports.getMyprofil = (req, res, next) => {
   User.findOne({
