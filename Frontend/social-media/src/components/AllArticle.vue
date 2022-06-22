@@ -4,7 +4,7 @@
       <button class="message mb-2 mt-2 first-button">
         <strong>Publications</strong>
         <p class="font-weight-bolder">
-          A vos clavier, partager, échanger, c'est ici que ça se passe 😉
+          Partager, échanger, dans une bonne cohésion 😉
         </p>
       </button>
     </div>
@@ -64,33 +64,26 @@
             </div>
           </div>
           <!---------------------------- -Post comment------------------------->
-          <div class="p-2">
+          <div class="p-2 border-style">
             <Comment :articleId="article._id" />
           </div>
 
           <!----------------------------Affichage des commentaires------------------------->
-          <div class="p-2">
-            <div
-              v-show="displayComment"
-              v-for="comment of article.Comments"
-              :key="comment.idcomment"
-            >
+
+          <div class="p-2 border-style">
+            <div v-for="comment of article.Comments" :key="comment.idcomment">
               <CommentCompo :comment="comment" />
             </div>
+          </div>
 
-            <div>
-              <button
-                class="btn btn-info"
-                @click="displayComment = !displayComment"
-              >
-                Cliquer pour afficher ou masquer les commentaires
-              </button>
-            </div>
-            ><!--Nous passons la condition de vrai à false-->
-
-            <!---Condition pour compter le nombre TT de com, si <1 afficher button "affichercom" (faire apparaître les comms)-->
-
-            <!--Fin de notre condition pour afficher les commentaires-->
+          <div>
+            <button
+              :id="article._id"
+              v-if="article.Comments.length > 1"
+              @click="displayComment(article._id)"
+            >
+              Afficher ou masquer les commentaires
+            </button>
           </div>
         </div>
       </article>
@@ -100,11 +93,10 @@
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
-import axios from "axios";
 import FormatDateDay from "../Service/FormatDateDay";
 import Comment from "./PostCommentArticle.vue";
 import CommentCompo from "./CommentCompo.vue";
-
+import axios from "axios";
 export default {
   name: "AllArticle",
   data() {
@@ -112,7 +104,6 @@ export default {
       user: {},
       articles: [],
       comments: [],
-      displayComment: true,
     };
   },
   mixins: [FormatDateDay],
@@ -134,7 +125,6 @@ export default {
             Authorization: "Bearer, " + localStorage.getItem("token"),
           },
         })
-
         .then((response) => {
           this.articles = response.data;
         })
@@ -163,6 +153,15 @@ export default {
           alert("Une erreur s'est produite");
         });
     },
+
+    displayComment(id) {
+      const comment = document.getElementById(id);
+      if (comment.classList.contains("hide")) {
+        document.getElementById(id).classList.remove("hide");
+      } else {
+        document.getElementById(id).classList.add("hide");
+      }
+    },
   },
 
   mounted() {
@@ -187,7 +186,7 @@ $color-tertiary: #4e5166;
   border: none;
   border-radius: 2em;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(30deg, $color-secondary, $color-tertiary);
+  background: linear-gradient($color-secondary, $color-tertiary);
 }
 .card-header {
   background-color: #ffd7d7;
@@ -206,5 +205,19 @@ a:hover {
 }
 .card-footer {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.border-style {
+  border-top: 1px solid #4e5166;
+  margin: 7px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
