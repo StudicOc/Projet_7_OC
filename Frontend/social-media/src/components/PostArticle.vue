@@ -33,7 +33,12 @@
             ></textarea>
           </div>
           <div class="form-group">
-            <button type="submit" value="Submit" @click.prevent="submitArticle">
+            <button
+              type="submit"
+              value="Submit"
+              @click.prevent="submitArticle"
+              aria-label="Envoyez votre formulaire pour poster votre message"
+            >
               Envoyer mon article
             </button>
           </div>
@@ -111,10 +116,8 @@ a:hover {
 button {
   padding: 0.5rem;
   border-radius: 6em;
-  font-size: 14px;
   background: linear-gradient(25deg, $color-primary, $color-secondary);
   border: none;
-  letter-spacing: 0.08em;
   cursor: pointer;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
   transition-property: transform;

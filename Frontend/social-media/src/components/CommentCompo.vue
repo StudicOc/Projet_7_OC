@@ -2,11 +2,11 @@
   <div>
     <ul class="list-group p-2">
       <li class="list-group-item">
-        <span>
-          Publié par: {{ comment.user.firstname }}
-          {{ comment.user.lastname }}, </span
-        ><br />
-        <span>{{ comment.description }}</span>
+        <strong
+          >{{ comment.user.firstname }} {{ comment.user.lastname }}</strong
+        >
+        <br />
+        {{ comment.description }}
       </li>
     </ul>
     <div v-if="comment.UserId == user.userId || user.isAdmin == 1">
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import VueJwtDecode from "vue-jwt-decode";
+import axios from "axios";
 export default {
   name: "CommentCompo",
   data() {
@@ -53,6 +53,7 @@ export default {
         });
     },
   },
+
   mounted() {
     let token = localStorage.getItem("token");
     let decoded = VueJwtDecode.decode(token);
@@ -61,4 +62,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.list-group-item {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+</style>

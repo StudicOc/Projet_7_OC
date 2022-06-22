@@ -6,12 +6,14 @@
         class="form-control"
         placeholder="Ecrivez un commentaire...."
         v-model="description"
+        aria-label="Veuillez saisir votre commentaire"
       />
     </div>
     <div class="form-group">
       <button
         type="button"
         class="btn btn-dark"
+        aria-label="Envoyez votre formulaire"
         @click="postComment(articleId)"
       >
         Ajouter
@@ -60,14 +62,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-button,
-input {
-  border-radius: 6rem;
-}
-
-input {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-</style>

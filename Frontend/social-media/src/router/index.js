@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store/index";
+
 //********Public content*********/
 import About from "@/views/Public-page/About.vue";
 import SignupForm from "@/views/Public-page/Signup.vue";
 import LoginForm from "@/views/Public-page/Login.vue";
+
 //********Private content*********/
 import ProfilConnect from "@/views/Authenticated/DashboardUser.vue";
-import Workplace from "@/views/Authenticated/PublicationPage.vue"; //********Display of publications and form to post a message*********/
+import Workplace from "@/views/Authenticated/PublicationPage.vue";
 import Article from "@/views/Authenticated/ArticlePage.vue";
 
 const routes = [
@@ -26,7 +28,7 @@ const routes = [
     name: "login",
     component: LoginForm,
   },
-  //****************/
+
   {
     path: "/profil",
     name: "profil",
@@ -66,19 +68,16 @@ const router = createRouter({
   routes,
 });
 
-//*************Fonction qui nous permettra d'afficher nos pages si seulement l'tulisateur est authentifié**************/
+//*************Fonction d'authentification**************/
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    //Les routes nécessite une authentification, vérifie si vous êtes connecté//
-    // Si non, une redirection est faite sur la page de connexion//
-
     if (!store.getters.isLoggedIn) {
       next(router.push("/login"));
     } else {
-      next(); // go to wherever I'm going
+      next(); //L'utilisateur peut naviguer sur les pages authentifiés
     }
   } else {
-    next(); // does not require auth, make sure to always call next()!
+    next(); // ne nécessite pas d'authentification
   }
 });
 

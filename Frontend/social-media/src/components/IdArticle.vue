@@ -16,6 +16,7 @@
                 class="form-control"
                 id="title"
                 v-model="article.title"
+                aria-label="Ajouter un titre"
               />
             </div>
             <div class="form-group">
@@ -25,6 +26,7 @@
                 class="form-control"
                 id="title"
                 v-model="article.description"
+                aria-label="Ajouter une description"
               />
             </div>
           </form>

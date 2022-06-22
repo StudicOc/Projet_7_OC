@@ -1,5 +1,3 @@
-<!----------------------ProfilConnect.vue------------------------------------------------->
-<!-------AFFICHAGE DES DONNEES DE L'UTILISATEUR APRES AUTHENTIFICATION.--------->
 <template>
   <main>
     <div class="container mt-4 mb-5" v-if="user">
@@ -25,8 +23,6 @@
                 <div class="card text-center">
                   <p>Informations personnelles</p>
 
-                  <!--DEBUT DU FORMULAIRE-->
-                  <!--Le formulaire doit être capable de modifier le mail affiché de l'utilisateur-->
                   <p class="font-weight-bold">
                     Besoin de mettre vos données à jours ? c'est ici.
                   </p>
@@ -77,7 +73,6 @@
                       </button>
                     </div>
                   </form>
-                  <!--FIN DU FORMULAIRE-->
                 </div>
 
                 <div class="card-body">
@@ -244,13 +239,7 @@ button {
   border: none;
   cursor: pointer;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
-  transition-property: transform;
-  transition-duration: 400ms; /* 400ms pour arriver et partir*/
-  &:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.1);
-  }
+
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
