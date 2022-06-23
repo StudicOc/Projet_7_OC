@@ -72,16 +72,12 @@
 
           <div class="p-2 border-style">
             <div v-for="comment of article.Comments" :key="comment.idcomment">
-              <CommentCompo :comment="comment" />
+              <CommentCompo :comment="comment" v-show="show" />
             </div>
           </div>
 
           <div>
-            <button
-              :id="article._id"
-              v-if="article.Comments.length > 1"
-              @click="displayComment(article._id)"
-            >
+            <button v-if="article.Comments.length > 1" @click="show = !show">
               Afficher ou masquer les commentaires
             </button>
           </div>
@@ -104,6 +100,7 @@ export default {
       user: {},
       articles: [],
       comments: [],
+      show: true,
     };
   },
   mixins: [FormatDateDay],
@@ -152,15 +149,6 @@ export default {
           console.log(error);
           alert("Une erreur s'est produite");
         });
-    },
-
-    displayComment(id) {
-      const comment = document.getElementById(id);
-      if (comment.classList.contains("hide")) {
-        document.getElementById(id).classList.remove("hide");
-      } else {
-        document.getElementById(id).classList.add("hide");
-      }
     },
   },
 
