@@ -72,14 +72,8 @@
 
           <div class="p-2 border-style">
             <div v-for="comment of article.Comments" :key="comment.idcomment">
-              <CommentCompo :comment="comment" v-show="show" />
+              <CommentCompo :comment="comment" />
             </div>
-          </div>
-
-          <div>
-            <button v-if="article.Comments.length > 1" @click="show = !show">
-              Afficher ou masquer les commentaires
-            </button>
           </div>
         </div>
       </article>
@@ -100,7 +94,6 @@ export default {
       user: {},
       articles: [],
       comments: [],
-      show: true,
     };
   },
   mixins: [FormatDateDay],
