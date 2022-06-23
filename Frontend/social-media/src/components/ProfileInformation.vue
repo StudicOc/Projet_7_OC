@@ -1,6 +1,9 @@
 <template>
   <main>
-    <div class="container mt-4 mb-5" v-if="user">
+    <div class="text-center img">
+      <img alt="Logo de groupomania" src="../assets/icon-black.webp" />
+    </div>
+    <div class="container mt-3 mb-5" v-if="user">
       <div class="row justify-content-center">
         <div class="col">
           <div class="col">
@@ -255,6 +258,12 @@ button {
     text-decoration: none;
     font-size: 22px;
     color: black;
+  }
+}
+@media only screen and (min-width: 800px) {
+  img {
+    object-fit: cover;
+    width: 170px;
   }
 }
 </style>
