@@ -3,8 +3,8 @@ import axios from "axios";
 
 export default createStore({
   state: {
-    token: localStorage.getItem("token") || "", // Récupération du token depuis le localstorage//
-    user: {}, // Objet contenant les futurs données utilisateur (profil) //
+    token: localStorage.getItem("token") || "",
+    user: {},
   },
   getters: {
     // Notre fontion prendra en compte notre token pour la connexion et déconnexion, si ce dernier n'est pas défini //
