@@ -2,7 +2,7 @@
 
 const Article = require("../models/Article");
 const Comment = require("../models/Comment");
-
+const User = require("../models/User");
 exports.createArticle = (req, res, next) => {
   //Nous allons renvoyer 2 paramêtres pour le body //
   const title = req.body.title;
