@@ -25,24 +25,29 @@ Voici les exigences émises par le comité de pilotage :
 
 Utilisation de bootstrap 4 pour un responsive design adapté
 
+# Backend ⚙️
+
+Pour installer les dépendances du package.json faire la commande : `npm install`
+Avec la commande `cd` se rendre dans le dossier backend et lancer le serveur: `nodemon server`.
+
+# Lancement des services Frontend ⚙️
+
+- Frameworks Vue.js Version 3
+- Pour installer les dépendances du package.json faire la commande : `npm install`
+- Avec la commande `cd` se rendre dans le dossier Front-end puis `cd social-media`.
+- Pour lancer l'application `npm run serve`
+
 # Package Frontend 🧾
 
 - Gestion des dates au format date avec le package dayjs.
 - Si le format date n'est pas reconnu, installer via la commande : `npm install dayjs`
 
-# Lancement des services Frontend ⚙️
-
-- Frameworks Vue.js Version 3
-- Avec la commande `cd` se rendre dans le dossier Front-end puis `cd social-media`.
-- Pour lancer l'application `npm run serve`
-
-# Backend ⚙️
-
-Avec la commande cd se rendre dans le dossier backend et lancer le serveur: `nodemon server`.
-
 # Important information ⚙️
 
 Notre application est protégée avec dotenv.
+Pour configurer votre base de donnée, dupliquer le fichier env-exemple.js et le renommer en .env
+Puis compléter vos informations utilisateurs de votre base de donnée pour `DATAB` nom de votre base,
+`USER`,`PS`pour votre passeword.
 
 # Exigences de sécurité 🔒
 
