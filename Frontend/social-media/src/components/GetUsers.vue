@@ -27,7 +27,6 @@ export default {
       users: [],
     };
   },
-
   methods: {
     showUsers() {
       axios
@@ -36,7 +35,6 @@ export default {
             Authorization: "Bearer, " + localStorage.getItem("token"),
           },
         })
-
         .then((response) => {
           this.users = response.data;
         })
@@ -48,7 +46,6 @@ export default {
         });
     },
   },
-
   mounted() {
     let token = localStorage.getItem("token");
     let decoded = VueJwtDecode.decode(token);
@@ -64,14 +61,12 @@ a {
   color: #14191e;
   text-decoration: none;
 }
-
 span {
   border-radius: 50%;
   padding: 7px;
   color: blueviolet;
   border: 2px solid orange;
 }
-
 .seperate-span {
   border-bottom: 1px solid #4e5166;
   padding-bottom: 1em;
