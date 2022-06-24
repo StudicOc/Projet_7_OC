@@ -1,17 +1,14 @@
-//*************************Chaque requête est testée avec Postman***********************//
-
 //*********Sécurisation des transferts de données**********//
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-//******* Importation de notre modéle User*******/
 const User = require("../models/User");
 
 //*******Enregistrement d'un user dans notre BDD *******/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password_key, 15)
-    //*******Construction de mon model User *******//
+
     .then((hash) => {
       const user = User.build({
         firstname: req.body.firstname,
@@ -118,10 +115,9 @@ exports.modifyMyprofil = (req, res, next) => {
     .catch((err) => res.status(500).json(err));
 };
 
-//********Supprimé un utlisateur de notre BDD*********/
 exports.deleteProfil = (req, res, next) => {
   User.destroy({
-    //*******Nous vérifions si le champs userId de notre requête est présent********/
+    //*******Nous vérifions si le champs userId de notre requête est présent********//
     where: { userId: req.userId },
   })
 
@@ -140,7 +136,6 @@ exports.deleteProfil = (req, res, next) => {
     });
 };
 
-//*******************Get All User*********************//
 exports.getAllUser = (req, res, next) => {
   User.findAll({
     attributes: { exclude: ["password_key", "updatedAt"] },
