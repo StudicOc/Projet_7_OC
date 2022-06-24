@@ -77,7 +77,7 @@ router.beforeEach((to, from, next) => {
       next(); //L'utilisateur peut naviguer sur les pages authentifiés
     }
   } else {
-    next(); // ne nécessite pas d'authentification
+    next(); // Ne nécessite pas d'authentification
   }
 });
 
