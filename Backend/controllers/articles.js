@@ -2,6 +2,7 @@ const Article = require("../models/Article");
 const User = require("../models/User");
 const Comment = require("../models/Comment");
 
+//***************Gestions de plusieurs articles***********//
 exports.getAllArticles = async (req, res) => {
   try {
     await Article.findAll({
