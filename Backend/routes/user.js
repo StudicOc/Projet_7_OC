@@ -1,7 +1,5 @@
-//***Import des modules nécessaires***//
 const express = require("express");
 
-//***Récupération du routage express***/
 const router = express.Router();
 
 const userCtrl = require("../controllers/user");
