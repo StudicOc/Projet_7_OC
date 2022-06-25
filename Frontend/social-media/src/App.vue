@@ -31,7 +31,7 @@
               <input
                 class="form-control mr-sm-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Faire une recherche"
                 aria-label="Search"
               />
               <button
