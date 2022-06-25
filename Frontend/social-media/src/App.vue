@@ -46,7 +46,7 @@
             <div class="navbar-nav">
               <router-link to="/">FAQ</router-link>
               <router-link to="/signup">Inscription</router-link>
-              <router-link to="/login">Login</router-link>
+              <router-link to="/login">Connexion</router-link>
             </div>
           </span>
         </div>
